@@ -1,7 +1,0 @@
-Login - Firebase
-Sync Google Calendar
-Create groups
-Color code events
-Share personal calendar
-Group + Personal Messaging
-Support professional networking?
