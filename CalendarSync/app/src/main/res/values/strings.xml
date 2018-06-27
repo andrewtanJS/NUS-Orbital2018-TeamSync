@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">CalendarSync</string>
+    <string name="nav_cal">Calendar</string>
+    <string name="nav_event">Events</string>
+    <string name="nav_cont">Contacts</string>
+    <string name="nav_set">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
