@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 
 public class MainActivity extends AppCompatActivity {
 
+
     private BottomNavigationView myMainNav;
     private FrameLayout myMainFrame;
 
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
 
     }
 
