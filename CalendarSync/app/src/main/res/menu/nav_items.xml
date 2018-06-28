@@ -14,8 +14,4 @@
         android:id="@+id/nav_cont"
         android:icon="@drawable/baseline_contacts_black_24dp"
         android:title="@string/nav_cont" />
-    <item
-        android:id="@+id/nav_login"
-        android:icon="@drawable/baseline_contacts_black_24dp"
-        android:title="@string/nav_login" />
 </menu>
