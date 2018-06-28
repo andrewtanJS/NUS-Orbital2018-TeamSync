@@ -30,11 +30,6 @@ public class CalendarFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         simpleCalendarView = (CalendarView) view.findViewById(R.id.simpleCalendarView); // get the reference of CalendarView
-        simpleCalendarView.setFocusedMonthDateColor(Color.RED); // set the red color for the dates of  focused month
-        simpleCalendarView.setUnfocusedMonthDateColor(Color.BLUE); // set the yellow color for the dates of an unfocused month
-        simpleCalendarView.setSelectedWeekBackgroundColor(Color.RED); // red color for the selected week's background
-        simpleCalendarView.setWeekSeparatorLineColor(Color.GREEN); // green color for the week separator line
-        // perform setOnDateChangeListener event on CalendarView
         simpleCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
