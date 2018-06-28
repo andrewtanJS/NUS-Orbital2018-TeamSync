@@ -13,7 +13,6 @@ import android.view.ViewGroup;
  */
 public class EventFragment extends Fragment {
 
-
     public EventFragment() {
         // Required empty public constructor
     }

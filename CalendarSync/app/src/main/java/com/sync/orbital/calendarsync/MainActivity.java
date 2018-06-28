@@ -11,13 +11,13 @@ import android.widget.FrameLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-
     private BottomNavigationView myMainNav;
     private FrameLayout myMainFrame;
 
     private CalendarFragment calendarFragment;
     private EventFragment eventFragment;
     private ContactFragment contactFragment;
+    private LoginFragment loginFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         calendarFragment = new CalendarFragment();
         eventFragment = new EventFragment();
         contactFragment = new ContactFragment();
+        loginFragment = new LoginFragment();
 
         setFragment(calendarFragment);
 
@@ -46,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.nav_cont :
                         setFragment(contactFragment);
+                        return true;
+                    case R.id.nav_login :
+                        setFragment(loginFragment);
                         return true;
                     default:
                         return false;
