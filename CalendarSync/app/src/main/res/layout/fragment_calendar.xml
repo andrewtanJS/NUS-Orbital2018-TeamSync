@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="50dp"
     tools:context=".CalendarFragment">
 
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
@@ -14,5 +15,12 @@
         app:mcv_selectionColor="#008080"
         app:mcv_calendarMode="month"
         />
+
+    <!-- TODO: Update blank fragment layout -->
+    <CalendarView
+        android:id="@+id/simpleCalendarView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
 
 </FrameLayout>
