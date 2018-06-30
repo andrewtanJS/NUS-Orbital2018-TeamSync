@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
     private CalendarFragment calendarFragment;
     private EventFragment eventFragment;
     private ContactFragment contactFragment;
-    private LoginFragment loginFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         calendarFragment = new CalendarFragment();
         eventFragment = new EventFragment();
         contactFragment = new ContactFragment();
-        loginFragment = new LoginFragment();
 
         setFragment(calendarFragment);
 

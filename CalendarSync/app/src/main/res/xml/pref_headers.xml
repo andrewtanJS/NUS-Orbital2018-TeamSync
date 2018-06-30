@@ -3,6 +3,11 @@
     <!-- These settings headers are only used on tablets. -->
 
     <header
+        android:fragment="com.sync.orbital.calendarsync.SettingsActivity$LoginPreferenceFragment"
+        android:icon="@drawable/ic_login_black_24dp"
+        android:title="@string/pref_header_login" />
+
+    <header
         android:fragment="com.sync.orbital.calendarsync.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_info_black_24dp"
         android:title="@string/pref_header_general" />
