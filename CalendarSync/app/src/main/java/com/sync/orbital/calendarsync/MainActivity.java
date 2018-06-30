@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     private void setFragment(Fragment fragment) {
@@ -71,18 +70,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_items, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.action_items, menu);
+//        return true;
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Go to settings
-        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(intent);
-        return true;
-    }
+
 }

@@ -1,11 +1,16 @@
 package com.sync.orbital.calendarsync;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -37,6 +42,11 @@ public class CalendarFragment extends Fragment {
             }
         });
         calendarView.setTopbarVisible(true);
+
+        setHasOptionsMenu(true);
+
+        ((MainActivity)getActivity()).setTitle("Calendar");
+
         return view;
     }
 
@@ -49,5 +59,20 @@ public class CalendarFragment extends Fragment {
                 parent.removeAllViews();
             }
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.action_calendar, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Go to settings
+        Intent intent = new Intent(getActivity(), SettingsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
+        return true;
     }
 }
