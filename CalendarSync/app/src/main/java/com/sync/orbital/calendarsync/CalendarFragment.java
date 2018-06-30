@@ -1,25 +1,23 @@
 package com.sync.orbital.calendarsync;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import android.os.Bundle;
-import android.support.v4.app.BundleCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
-import android.graphics.Color;
 import android.widget.Toast;
 
-import java.util.Calendar;
-
+import com.prolificinteractive.materialcalendarview.*;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class CalendarFragment extends Fragment {
 
-    CalendarView simpleCalendarView;
+    MaterialCalendarView calendarView;
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -29,22 +27,24 @@ public class CalendarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
-        simpleCalendarView = (CalendarView) view.findViewById(R.id.simpleCalendarView); // get the reference of CalendarView
-        simpleCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        calendarView =  view.findViewById(R.id.calendarView); // get the reference of CalendarView
+        calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                // display the selected date by using a toast
-                Toast.makeText(getActivity().getApplicationContext(), dayOfMonth + "/" + month + "/" + year, Toast.LENGTH_LONG).show();
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                Toast.makeText(getActivity().getApplicationContext(),
+                        date.getDay() + "/" + date.getMonth() + "/" + date.getYear() ,
+                                Toast.LENGTH_LONG).show();
             }
         });
+        calendarView.setTopbarVisible(true);
         return view;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (simpleCalendarView != null) {
-            ViewGroup parent = (ViewGroup) simpleCalendarView.getParent();
+        if (calendarView != null) {
+            ViewGroup parent = (ViewGroup) calendarView.getParent();
             if (parent != null) {
                 parent.removeAllViews();
             }
