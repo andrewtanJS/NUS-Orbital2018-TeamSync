@@ -6,4 +6,10 @@
     tools:context=".ContactFreeFragment">
 
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Everyone is avoiding you."
+        android:gravity="center"/>
+
 </FrameLayout>

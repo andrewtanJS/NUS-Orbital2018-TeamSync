@@ -21,6 +21,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -79,6 +80,10 @@ public class LoginActivity extends AppCompatActivity implements
         findViewById(R.id.email_create_account_button).setOnClickListener(this);
         findViewById(R.id.sign_out_button).setOnClickListener(this);
         findViewById(R.id.verify_email_button).setOnClickListener(this);
+
+//        Toolbar toolbar = findViewById(R.id.my_toolbar);
+//        setSupportActionBar(toolbar);
+//        setTitle("Account");
     }
 
     @Override
