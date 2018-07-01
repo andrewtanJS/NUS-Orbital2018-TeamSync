@@ -4,8 +4,9 @@ public class ContactsAllStruct {
     private int image;
     private String name;
 
-    public ContactsAllStruct(int image) {
+    public ContactsAllStruct(int image, String name) {
         this.image = image;
+        this.name = name;
     }
 
     public int getImage() {

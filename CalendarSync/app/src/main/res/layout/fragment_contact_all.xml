@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ContactAllFragment">
+    tools:context=".ContactAllFragment"
+    android:layout_marginTop="50dp">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_height="match_parent"
@@ -14,7 +15,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_incoming"
+            android:id="@+id/recycler_contacts_all"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

@@ -12,15 +12,18 @@
         android:orientation="horizontal">
 
         <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/profile_pic_contacts"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/baby_dory"
-            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="12dp"
             app:civ_border_color="#00FF00"
             app:civ_border_width="2dp"
             />
 
         <TextView
+            android:id="@+id/name_contacts_all"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Jake Peralta"
