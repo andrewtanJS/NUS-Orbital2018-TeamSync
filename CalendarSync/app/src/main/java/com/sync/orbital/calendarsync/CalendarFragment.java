@@ -17,6 +17,9 @@ import android.widget.Toast;
 
 import com.prolificinteractive.materialcalendarview.*;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -42,7 +45,6 @@ public class CalendarFragment extends Fragment {
             }
         });
         calendarView.setTopbarVisible(true);
-
         setHasOptionsMenu(true);
 
         ((MainActivity)getActivity()).setTitle("Calendar");
