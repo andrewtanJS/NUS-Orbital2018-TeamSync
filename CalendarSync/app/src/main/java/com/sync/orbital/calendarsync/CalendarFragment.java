@@ -1,6 +1,7 @@
 package com.sync.orbital.calendarsync;
 
 import android.content.Intent;
+import android.graphics.RectF;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -13,19 +14,27 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 import android.widget.Toast;
 
-import com.prolificinteractive.materialcalendarview.*;
+import com.alamkanak.weekview.DateTimeInterpreter;
+import com.alamkanak.weekview.MonthLoader;
+import com.alamkanak.weekview.WeekView;
+import com.alamkanak.weekview.WeekViewEvent;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CalendarFragment extends Fragment {
+public class CalendarFragment extends Fragment
+    implements WeekView.EventClickListener, MonthLoader.MonthChangeListener,
+               WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener{
 
-    MaterialCalendarView calendarView;
+    WeekView calendarView;
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -35,16 +44,22 @@ public class CalendarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
-        calendarView =  view.findViewById(R.id.calendarView); // get the reference of CalendarView
-        calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
-            @Override
-            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                Toast.makeText(getActivity().getApplicationContext(),
-                        date.getDay() + "/" + (date.getMonth() + 1)+ "/" + date.getYear() ,
-                                Toast.LENGTH_LONG).show();
-            }
-        });
-        calendarView.setTopbarVisible(true);
+        // Get a reference for the week view in the layout.
+        WeekView calendarView = view.findViewById(R.id.weekView);
+
+
+        // Show a toast message about the touched event.
+        calendarView.setOnEventClickListener(this);
+
+        // The week view has infinite scrolling horizontally. We have to provide the events of a
+        // month every time the month changes on the week view.
+        calendarView.setMonthChangeListener(this);
+
+        // Set long press listener for events.
+        calendarView.setEventLongPressListener(this);
+
+        // Set long press listener for empty view
+        calendarView.setEmptyViewLongPressListener(this);
         setHasOptionsMenu(true);
 
         ((MainActivity)getActivity()).setTitle("Calendar");
@@ -89,5 +104,37 @@ public class CalendarFragment extends Fragment {
                 break;
         }
         return true;
+    }
+
+
+    @Override
+    public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
+        // Populate the week view with some events.
+        List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
+        return events;
+    }
+
+    protected String getEventTitle(Calendar time) {
+        return String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH)+1, time.get(Calendar.DAY_OF_MONTH));
+    }
+
+    @Override
+    public void onEventClick(WeekViewEvent event, RectF eventRect) {
+        Toast.makeText(getActivity().getApplicationContext(), "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
+        Toast.makeText(getActivity().getApplicationContext(), "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onEmptyViewLongPress(Calendar time) {
+        Toast.makeText(getActivity().getApplicationContext(),
+                "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
+    }
+
+    public WeekView getWeekView() {
+        return calendarView;
     }
 }

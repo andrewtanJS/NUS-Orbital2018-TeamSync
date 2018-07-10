@@ -6,14 +6,33 @@
     android:layout_marginTop="50dp"
     tools:context=".CalendarFragment">
 
-    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+    <!--<com.prolificinteractive.materialcalendarview.MaterialCalendarView-->
+        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+        <!--android:id="@+id/calendarView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:mcv_showOtherDates="all"-->
+        <!--app:mcv_selectionColor="#008080"-->
+        <!--app:mcv_calendarMode="month"-->
+        <!--/>-->
+
+    <com.alamkanak.weekview.WeekView
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/calendarView"
+        android:id="@+id/weekView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:mcv_showOtherDates="all"
-        app:mcv_selectionColor="#008080"
-        app:mcv_calendarMode="week"
-        />
+        android:layout_height="match_parent"
+        app:eventTextColor="@android:color/white"
+        app:textSize="12sp"
+        app:hourHeight="60dp"
+        app:headerColumnPadding="8dp"
+        app:headerColumnTextColor="#8f000000"
+        app:headerRowPadding="12dp"
+        app:columnGap="8dp"
+        app:noOfVisibleDays="3"
+        app:headerRowBackgroundColor="#ffefefef"
+        app:dayBackgroundColor="#05000000"
+        app:todayBackgroundColor="#1848adff"
+        app:headerColumnBackground="#ffffffff"/>
+
 
 </FrameLayout>
