@@ -8,5 +8,29 @@
         android:icon="@drawable/ic_settings_24dp"
         android:title="@string/action_settings"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/ic_action_overflow"
+        android:title="@string/options"
+        android:orderInCategory="101"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_action_overflow">
+
+        <menu>
+
+            <item android:id="@+id/day_view"
+                app:showAsAction="ifRoom"
+                android:title="@string/dayview" />
+
+            <item android:id="@+id/week_view"
+                app:showAsAction="ifRoom"
+                android:title="@string/weekview" />
+
+            <item android:id="@+id/month_view"
+                app:showAsAction="ifRoom"
+                android:title="@string/monthview" />
+
+        </menu>
+
+    </item>
 
 </menu>

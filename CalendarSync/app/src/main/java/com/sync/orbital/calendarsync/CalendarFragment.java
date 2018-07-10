@@ -40,7 +40,7 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 Toast.makeText(getActivity().getApplicationContext(),
-                        date.getDay() + "/" + date.getMonth() + "/" + date.getYear() ,
+                        date.getDay() + "/" + (date.getMonth() + 1)+ "/" + date.getYear() ,
                                 Toast.LENGTH_LONG).show();
             }
         });
@@ -72,9 +72,22 @@ public class CalendarFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Go to settings
-        Intent intent = new Intent(getActivity(), SettingsActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(intent);
+        Intent intent;
+        switch (item.getItemId()) {
+            case R.id.day_view:
+                break;
+            case R.id.week_view:
+                break;
+            case R.id.month_view:
+                break;
+            case R.id.action_settings_cal:
+                intent = new Intent(getActivity(), SettingsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
         return true;
     }
 }
