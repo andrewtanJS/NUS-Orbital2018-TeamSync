@@ -47,7 +47,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         time.setText(eventInfo.getTime());
         date.setText(eventInfo.getDate());
 
-        switch(position%5) {
+ /*       switch(position%5) {
             case 0: holder.itemView.setBackgroundColor(Color.parseColor("#fff0b3")); break;
             case 1: holder.itemView.setBackgroundColor(Color.parseColor("#ccccff")); break;
             case 2: holder.itemView.setBackgroundColor(Color.parseColor("#ccffcc")); break;
@@ -55,6 +55,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             case 4: holder.itemView.setBackgroundColor(Color.parseColor("#ffe6cc")); break;
             default: holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
         }
+
+        */
 
 
     }

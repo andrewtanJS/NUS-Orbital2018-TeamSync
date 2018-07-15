@@ -69,6 +69,10 @@ public class LoginActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Toolbar toolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Login");
+
         mAuth = FirebaseAuth.getInstance();
         // Set up the login form.
         mStatusTextView = findViewById(R.id.status);

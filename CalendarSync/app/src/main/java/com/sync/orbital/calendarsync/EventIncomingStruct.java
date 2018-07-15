@@ -4,6 +4,10 @@ public class EventIncomingStruct {
 
     private String name, status, attendees, time, date;
 
+    public EventIncomingStruct(){
+
+    }
+
     public EventIncomingStruct(String name, String status, String attendees, String time, String date) {
         this.name = name;
         this.status = status;

@@ -2,12 +2,19 @@ package com.sync.orbital.calendarsync;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -22,6 +29,9 @@ public class EventIncomingFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private ArrayList<EventIncomingStruct> eventList;
+    private ListAdapter adapterIncoming;
+    private RecyclerView recyclerViewIncoming;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,30 +39,60 @@ public class EventIncomingFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_event_incoming, container, false);
 
-        ArrayList<EventIncomingStruct> eventList;
 
-        RecyclerView recyclerViewIncoming = (RecyclerView) view.findViewById(R.id.recycler_incoming);
+
+        recyclerViewIncoming = (RecyclerView) view.findViewById(R.id.recycler_incoming);
         recyclerViewIncoming.setHasFixedSize(true);
 
         //Event info
         eventList = new ArrayList<>();
-        eventList.add(new EventIncomingStruct("OG Meetup", "Going", "27/39", "8.00pm", "2 July"));
-        eventList.add(new EventIncomingStruct("Orbital Meeting", "Not Going", "2/14", "11.30am", "3 July"));
-        eventList.add(new EventIncomingStruct("Dinner Date", "Going", "2/2", "5.00pm", "3 July"));
-        eventList.add(new EventIncomingStruct("Antman Movie", "Going", "5/7", "9.15pm", "9 July"));
-        eventList.add(new EventIncomingStruct("Department Meeting", "Going", "46/70", "10.00am", "11 July"));
-        eventList.add(new EventIncomingStruct("Dad's Birthday", "Going", "4/5", "12.00pm", "23 July"));
 
         //linear layout manager
         RecyclerView.LayoutManager layoutManagerIncoming = new LinearLayoutManager(this.getActivity());
         recyclerViewIncoming.setLayoutManager(layoutManagerIncoming);
 
         //specify adapter
-        ListAdapter adapterIncoming = new ListAdapter(getActivity(), eventList);
+        adapterIncoming = new ListAdapter(getActivity(), eventList);
         recyclerViewIncoming.setAdapter(adapterIncoming);
+
+        getFirebaseData(new EventsCallback(){
+           @Override
+           public void onCallBack(EventIncomingStruct event){
+               eventList.add(event);
+               adapterIncoming.notifyDataSetChanged();
+
+           }
+        });
+
 
 
         return view;
+    }
+
+    private void getFirebaseData(final EventsCallback eventsCallback) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference eventsRef = reference.child("events");
+        eventsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //Result will be holded Here
+                for (DataSnapshot dataSnap: dataSnapshot.getChildren()){
+
+                    String name = String.valueOf(dataSnap.child("name").getValue());
+                    String status = String.valueOf(dataSnap.child("status").getValue());
+                    String attendees = String.valueOf(dataSnap.child("attendees").getValue());
+                    String time = String.valueOf(dataSnap.child("time").getValue());
+                    String date = String.valueOf(dataSnap.child("date").getValue());
+                    EventIncomingStruct events = new EventIncomingStruct(name, status, attendees, time, date);
+                    eventsCallback.onCallBack(events);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                //Handle error
+            }
+        });
     }
 
 }
