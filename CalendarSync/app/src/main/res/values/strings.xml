@@ -129,5 +129,8 @@
     <string name="instant_validation">(instant validation)</string>
     <string name="google_status_fmt">Google User: %s</string>
     <string name="firebase_status_fmt">Firebase User: %s</string>
+    <string name="need_a_new_account">Need a new account?</string>
+    <string name="hint_username">Username</string>
+    <string name="already_have_account">Already have account</string>
 
 </resources>

@@ -33,6 +33,9 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
+        <activity android:name=".StartActivity" />
+        <activity android:name=".RegisterActivity"
+            android:parentActivityName=".StartActivity"></activity>
     </application>
 
 </manifest>

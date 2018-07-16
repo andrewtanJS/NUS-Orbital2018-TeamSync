@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -58,18 +60,19 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
     private void addEvent(){
         String eventName = mEventNameField.getText().toString().trim();
         String dateTime = mDateField.getText().toString().trim();
+
+        //Get Firebase user
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         //Write message to database
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("events");
         //Event object to store information
 
-        EventIncomingStruct eventNew = new EventIncomingStruct(eventName, "Going", "27/39", "8.00pm", "2 July");
+        EventIncomingStruct eventNew = new EventIncomingStruct(eventName, "Going", "0/0", "8.00pm", "2 July");
 
         String eventId = mDatabase.push().getKey();
         mDatabase.child(eventId).setValue(eventNew);
 
         Toast.makeText(this, "Event added", Toast.LENGTH_LONG).show();
-
-
     }
 
     private void backToEventActivity(){
