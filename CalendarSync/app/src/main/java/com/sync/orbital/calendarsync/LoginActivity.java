@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity implements
 
 //        Toolbar toolbar = findViewById(R.id.my_toolbar);
 //        setSupportActionBar(toolbar);
-//        setTitle("Account");
+//        getSupportActionBar().setTitle("Login");
     }
 
     @Override
@@ -152,6 +152,7 @@ public class LoginActivity extends AppCompatActivity implements
                             updateUI(user);
 
                             Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(mainIntent);
                             finish();
                         } else {

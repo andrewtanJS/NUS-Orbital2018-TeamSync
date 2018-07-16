@@ -20,6 +20,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -31,6 +35,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mEmail;
     private EditText mPassword;
     private Button mCreateBtn;
+
+    private DatabaseReference mDatabase;
 
     @VisibleForTesting
     public ProgressDialog mProgressDialog;
@@ -68,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void createAccount(String username, String email, String password) {
+    private void createAccount(final String username, String email, String password) {
         Log.d(TAG, "createAccount:" + email);
         if (!validateForm(username, email, password)) {
             return;
@@ -82,9 +88,30 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
-                            startActivity(mainIntent);
-                            finish();
+
+                            //Database Update
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            String uid = user.getUid();
+
+                            mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+
+                            HashMap<String, String> userMap = new HashMap<>();
+                            userMap.put("name", username);
+                            userMap.put("status", "Hello World");
+                            userMap.put("image", "default");
+                            userMap.put("thumb_image", "default");
+
+                            mDatabase.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
+                                        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(mainIntent);
+                                        finish();
+                                    }
+                                }
+                            });
 
                         } else {
                             // If sign in fails, display a message to the user.

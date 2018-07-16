@@ -37,8 +37,9 @@ public class ContactFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
+        //Tabs
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.AddFragment(new ContactFreeFragment(), "Free");
+        adapter.AddFragment(new ContactChatsFragment(), "Chats");
         adapter.AddFragment(new ContactAllFragment(), "All");
         adapter.AddFragment(new ContactRequestFragment(), "Request");
         viewPager.setAdapter(adapter);
@@ -61,6 +62,9 @@ public class ContactFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case (R.id.action_add_contacts):
+                Intent intent_prof = new Intent(getActivity(), ProfileActivity.class);
+                intent_prof.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent_prof);
                 return true;
             case (R.id.action_settings_contacts):
                 Intent intent_set = new Intent(getActivity(), SettingsActivity.class);

@@ -36,10 +36,10 @@ public class ContactAllFragment extends Fragment {
 
         //Event info
         contactList = new ArrayList<>();
-        contactList.add(new ContactsAllStruct(R.drawable.baby_dory, "Ellen"));
-        contactList.add(new ContactsAllStruct(R.drawable.elon_musk, "Mark Zuckerberg"));
-        contactList.add(new ContactsAllStruct(R.drawable.eminem, "Marshall"));
-        contactList.add(new ContactsAllStruct(R.drawable.messi, "Miss Penalty"));
+//        contactList.add(new ContactsAllStruct(R.drawable.baby_dory, "Ellen"));
+//        contactList.add(new ContactsAllStruct(R.drawable.elon_musk, "Mark Zuckerberg"));
+//        contactList.add(new ContactsAllStruct(R.drawable.eminem, "Marshall"));
+//        contactList.add(new ContactsAllStruct(R.drawable.messi, "Miss Penalty"));
 
         //linear layout manager
         RecyclerView.LayoutManager layoutManagerIncoming = new LinearLayoutManager(this.getActivity());
