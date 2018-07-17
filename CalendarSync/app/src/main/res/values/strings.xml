@@ -132,5 +132,7 @@
     <string name="need_a_new_account">Need a new account?</string>
     <string name="hint_username">Username</string>
     <string name="already_have_account">Already have account</string>
+    <string name="account_status">Account Status</string>
+    <string name="save_changes">Save Changes</string>
 
 </resources>

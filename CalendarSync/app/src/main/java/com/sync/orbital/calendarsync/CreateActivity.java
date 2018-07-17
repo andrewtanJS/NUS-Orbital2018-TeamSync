@@ -15,13 +15,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class CreateActivity extends AppCompatActivity implements View.OnClickListener{
 
     private EditText mEventNameField;
     private EditText mDateField;
     Button buttonCreate;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,6 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
         toolbar.setTitle("Create Activity");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
 
         mEventNameField = findViewById(R.id.activity_name);
         mDateField = findViewById(R.id.action_pick_date);
