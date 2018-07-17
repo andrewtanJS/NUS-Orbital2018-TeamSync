@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,6 +36,9 @@ public class CalendarFragment extends Fragment
                WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener{
 
     WeekView calendarView;
+    static final int TYPE_DAY_VIEW = 1;
+    static final int TYPE_WEEK_VIEW = 2;
+    int calendarViewType = TYPE_WEEK_VIEW;
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -45,8 +49,7 @@ public class CalendarFragment extends Fragment
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         // Get a reference for the week view in the layout.
-        WeekView calendarView = view.findViewById(R.id.weekView);
-
+        calendarView = view.findViewById(R.id.weekView);
 
         // Show a toast message about the touched event.
         calendarView.setOnEventClickListener(this);
@@ -88,10 +91,29 @@ public class CalendarFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         // Go to settings
         Intent intent;
+
         switch (item.getItemId()) {
             case R.id.day_view:
+                if (calendarViewType != TYPE_DAY_VIEW) {
+                    item.setChecked(!item.isChecked());
+                    calendarView.setNumberOfVisibleDays(1);
+                    calendarViewType = TYPE_DAY_VIEW;
+                    // Lets change some dimensions to best fit the view.
+                    calendarView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
+                    calendarView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
+                    calendarView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
+                }
                 break;
             case R.id.week_view:
+                if (calendarViewType != TYPE_WEEK_VIEW) {
+                    item.setChecked(!item.isChecked());
+                    calendarView.setNumberOfVisibleDays(7);
+                    calendarViewType = TYPE_WEEK_VIEW;
+                    // Lets change some dimensions to best fit the view.
+                    calendarView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
+                    calendarView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
+                    calendarView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
+                }
                 break;
             case R.id.month_view:
                 break;
