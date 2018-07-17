@@ -12,7 +12,7 @@
         android:layout_height="130dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="52dp"
         android:src="@drawable/default_user"
         app:civ_border_color="@color/colorPrimary"
         app:civ_border_width="2dp" />
@@ -21,19 +21,48 @@
         android:id="@+id/settings_picture_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="191dp"
-        android:text="Change Picture" />
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/settings_status_button"
+        android:layout_marginStart="47dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Change Picture"
+        android:textColor="@color/colorWhite"/>
 
     <Button
         android:id="@+id/settings_status_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="194dp"
+        android:layout_marginEnd="49dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Change status"
+        android:textColor="@color/colorWhite"/>
+
+    <Button
+        android:id="@+id/settings_logout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="132dp"
-        android:text="Change status" />
+        android:layout_marginBottom="119dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:backgroundTint="@color/colorAccent"
+        android:text="Logout"
+        android:textColor="@color/colorWhite"/>
+
+    <Button
+        android:id="@+id/settings_verify_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="59dp"
+        android:paddingLeft="35dp"
+        android:paddingRight="35dp"
+        android:text="Verify" />
 
     <TextView
         android:id="@+id/settings_user_name"
@@ -41,16 +70,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="234dp"
+        android:layout_marginTop="202dp"
         android:text="@string/hint_username"
-        android:textSize="20sp"
-        android:textColor="@color/colorBlack"/>
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/settings_profile_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="243dp"
         android:text="Free" />
 
 </RelativeLayout>

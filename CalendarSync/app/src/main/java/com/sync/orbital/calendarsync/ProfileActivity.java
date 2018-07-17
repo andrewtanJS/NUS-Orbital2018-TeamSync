@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -33,6 +34,8 @@ import org.w3c.dom.Text;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    private static final String TAG = "EmailPassword";
+
     private DatabaseReference mUserDatabase;
     private FirebaseUser mCurrentUser;
 
@@ -42,6 +45,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     private Button mStatusButton;
     private Button mPicButton;
+    private Button mLogoutButton;
+    private Button mVerifyButton;
 
     private static final int PIC_PICK = 1;
 
@@ -49,6 +54,8 @@ public class ProfileActivity extends AppCompatActivity {
     private StorageReference mStorageRef;
 
     private ProgressDialog mDialog;
+
+    private FirebaseAuth mAuth;
 
 
     @Override
@@ -62,11 +69,14 @@ public class ProfileActivity extends AppCompatActivity {
 
         mStatusButton = (Button) findViewById(R.id.settings_status_button);
         mPicButton = (Button) findViewById(R.id.settings_picture_button);
+        mLogoutButton = (Button) findViewById(R.id.settings_logout_button);
+        mVerifyButton = (Button) findViewById(R.id.settings_verify_button);
 
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
+        mAuth = FirebaseAuth.getInstance();
 
         String currentUid = mCurrentUser.getUid();
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUid);
@@ -114,6 +124,34 @@ public class ProfileActivity extends AppCompatActivity {
                         .start(ProfileActivity.this);*/
             }
         });
+
+        mLogoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                Intent mainIntent = new Intent(ProfileActivity.this, MainActivity.class);
+                startActivity(mainIntent);
+                finish();
+            }
+        });
+
+        mVerifyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendEmailVerification();
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mCurrentUser.isEmailVerified()){
+            mVerifyButton.setVisibility(View.GONE);
+        }
+        else {
+            mVerifyButton.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -183,5 +221,36 @@ public class ProfileActivity extends AppCompatActivity {
                 Exception error = result.getError();
             }
         }
+    }
+
+    private void sendEmailVerification() {
+        // Disable button
+        findViewById(R.id.settings_verify_button).setEnabled(false);
+
+        // Send verification email
+        // [START send_email_verification]
+        final FirebaseUser user = mAuth.getCurrentUser();
+        user.sendEmailVerification()
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // [START_EXCLUDE]
+                        // Re-enable button
+                        findViewById(R.id.settings_verify_button).setEnabled(true);
+
+                        if (task.isSuccessful()) {
+                            Toast.makeText(ProfileActivity.this,
+                                    "Verification email sent to " + user.getEmail(),
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.e(TAG, "sendEmailVerification", task.getException());
+                            Toast.makeText(ProfileActivity.this,
+                                    "Failed to send verification email.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        // [END_EXCLUDE]
+                    }
+                });
+        // [END send_email_verification]
     }
 }
