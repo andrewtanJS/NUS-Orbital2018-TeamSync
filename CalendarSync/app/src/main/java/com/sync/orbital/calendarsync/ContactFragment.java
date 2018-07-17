@@ -67,8 +67,7 @@ public class ContactFragment extends Fragment {
                 startActivity(intent_prof);
                 return true;
             case (R.id.action_settings_contacts):
-                Intent intent_set = new Intent(getActivity(), SettingsActivity.class);
-                intent_set.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                Intent intent_set = new Intent(getActivity(), ProfileActivity.class);
                 startActivity(intent_set);
                 return true;
             default:

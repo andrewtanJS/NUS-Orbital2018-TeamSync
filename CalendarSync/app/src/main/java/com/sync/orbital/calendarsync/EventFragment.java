@@ -64,8 +64,7 @@ public class EventFragment extends Fragment {
                 startActivity(intent_add);
                 return true;
             case (R.id.action_settings_events):
-                Intent intent_set = new Intent(getActivity(), SettingsActivity.class);
-                intent_set.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                Intent intent_set = new Intent(getActivity(), ProfileActivity.class);
                 startActivity(intent_set);
                 return true;
             default:
