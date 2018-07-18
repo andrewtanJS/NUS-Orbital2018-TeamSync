@@ -36,8 +36,9 @@
         <item>-1</item>
     </string-array>
 
-    <string name="dayview">Day</string>
-    <string name="weekview">Week</string>
+    <string name="dayview">Day View</string>
+    <string name="threedayview">3 Day View</string>
+    <string name="weekview">Week View</string>
     <string name="monthview">Month</string>
 
     <!-- Example settings for Data & Sync -->

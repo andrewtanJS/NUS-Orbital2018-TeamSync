@@ -37,8 +37,9 @@ public class CalendarFragment extends Fragment
 
     WeekView calendarView;
     static final int TYPE_DAY_VIEW = 1;
-    static final int TYPE_WEEK_VIEW = 2;
-    int calendarViewType = TYPE_WEEK_VIEW;
+    static final int TYPE_THREE_DAY_VIEW = 2;
+    static final int TYPE_WEEK_VIEW = 3;
+    int calendarViewType = TYPE_THREE_DAY_VIEW;
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -104,6 +105,17 @@ public class CalendarFragment extends Fragment
                     calendarView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
                 }
                 break;
+            case R.id.three_day_view:
+                if (calendarViewType != TYPE_THREE_DAY_VIEW) {
+                    item.setChecked(!item.isChecked());
+                    calendarView.setNumberOfVisibleDays(3);
+                    calendarViewType = TYPE_THREE_DAY_VIEW;
+                    // Lets change some dimensions to best fit the view.
+                    calendarView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
+                    calendarView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
+                    calendarView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
+                }
+                break;
             case R.id.week_view:
                 if (calendarViewType != TYPE_WEEK_VIEW) {
                     item.setChecked(!item.isChecked());
@@ -114,8 +126,6 @@ public class CalendarFragment extends Fragment
                     calendarView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
                     calendarView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
                 }
-                break;
-            case R.id.month_view:
                 break;
             case R.id.action_settings_cal:
                 intent = new Intent(getActivity(), SettingsActivity.class);
