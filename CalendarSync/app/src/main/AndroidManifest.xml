@@ -34,7 +34,8 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login" />
+            android:label="@string/title_activity_login"
+            android:parentActivityName=".StartActivity"/>
         <activity android:name=".StartActivity" />
         <activity
             android:name=".RegisterActivity"

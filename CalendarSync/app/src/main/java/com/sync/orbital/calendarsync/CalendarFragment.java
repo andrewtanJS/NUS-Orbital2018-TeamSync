@@ -128,8 +128,7 @@ public class CalendarFragment extends Fragment
                 }
                 break;
             case R.id.action_settings_cal:
-                intent = new Intent(getActivity(), SettingsActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent = new Intent(getActivity(), ProfileActivity.class);
                 startActivity(intent);
                 break;
             default:

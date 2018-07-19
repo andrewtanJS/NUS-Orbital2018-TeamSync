@@ -62,9 +62,6 @@ public class ContactFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case (R.id.action_add_contacts):
-                Intent intent_prof = new Intent(getActivity(), ProfileActivity.class);
-                intent_prof.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intent_prof);
                 return true;
             case (R.id.action_settings_contacts):
                 Intent intent_set = new Intent(getActivity(), ProfileActivity.class);
