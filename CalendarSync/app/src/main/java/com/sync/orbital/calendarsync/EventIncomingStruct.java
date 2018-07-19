@@ -2,17 +2,20 @@ package com.sync.orbital.calendarsync;
 
 public class EventIncomingStruct {
 
-    private String name, status, attendees, time, date;
+    private String name, status, attendees, startTime, endTime, date;
 
     public EventIncomingStruct(){
 
     }
 
-    public EventIncomingStruct(String name, String status, String attendees, String time, String date) {
+    public EventIncomingStruct(String name, String status,
+                               String attendees, String startTime,
+                               String endTime, String date) {
         this.name = name;
         this.status = status;
         this.attendees = attendees;
-        this.time = time;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.date = date;
     }
 
@@ -40,12 +43,20 @@ public class EventIncomingStruct {
         this.attendees = attendees;
     }
 
-    public String getTime() {
-        return time;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
     public String getDate() {
@@ -55,4 +66,5 @@ public class EventIncomingStruct {
     public void setDate(String date) {
         this.date = date;
     }
+
 }

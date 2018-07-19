@@ -86,9 +86,11 @@ public class EventIncomingFragment extends Fragment {
                     String name = String.valueOf(dataSnap.child("name").getValue());
                     String status = String.valueOf(dataSnap.child("status").getValue());
                     String attendees = String.valueOf(dataSnap.child("attendees").getValue());
-                    String time = String.valueOf(dataSnap.child("time").getValue());
+                    String startTime = String.valueOf(dataSnap.child("startTime").getValue());
+                    String endTime = String.valueOf(dataSnap.child("endTime").getValue());
                     String date = String.valueOf(dataSnap.child("date").getValue());
-                    EventIncomingStruct events = new EventIncomingStruct(name, status, attendees, time, date);
+                    EventIncomingStruct events =
+                            new EventIncomingStruct(name, status, attendees, startTime, endTime, date);
                     eventsCallback.onCallBack(events);
                 }
             }

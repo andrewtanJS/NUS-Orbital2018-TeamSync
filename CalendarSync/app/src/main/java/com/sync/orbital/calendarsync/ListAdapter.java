@@ -33,18 +33,18 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         EventIncomingStruct eventInfo = mList.get(position);
-        TextView name, status, attendees, time, date;
+        TextView name, status, attendees, startTime, date;
 
         name = holder.name;
         status = holder.status;
         attendees = holder.attendees;
-        time = holder.time;
+        startTime = holder.time;
         date = holder.date;
 
         name.setText(eventInfo.getName());
         status.setText((eventInfo.getStatus()));
         attendees.setText(eventInfo.getAttendees());
-        time.setText(eventInfo.getTime());
+        startTime.setText(eventInfo.getStartTime());
         date.setText(eventInfo.getDate());
 
  /*       switch(position%5) {

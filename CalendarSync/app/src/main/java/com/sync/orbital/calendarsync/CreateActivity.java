@@ -25,7 +25,8 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
 
     private EditText mEventNameField;
     private EditText mDateField;
-    private EditText mTimeField;
+    private EditText mStartTimeField;
+    private EditText mEndTimeField;
     Button buttonCreate;
 
     @Override
@@ -41,7 +42,8 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
 
         mEventNameField = findViewById(R.id.activity_name);
         mDateField = findViewById(R.id.action_pick_date);
-        mTimeField = findViewById(R.id.action_pick_time);
+        mStartTimeField = findViewById(R.id.action_pick_start_time);
+        mEndTimeField = findViewById(R.id.action_pick_end_time);
         buttonCreate = findViewById(R.id.action_create_event);
         buttonCreate.setOnClickListener(CreateActivity.this);
 
@@ -65,7 +67,8 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
     private void addEvent(){
         String eventName = mEventNameField.getText().toString().trim();
         String date = mDateField.getText().toString().trim();
-        String time= mTimeField.getText().toString().trim();
+        String startTime= mStartTimeField.getText().toString().trim();
+        String endTime= mEndTimeField.getText().toString().trim();
 
         //Get Firebase user
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -74,7 +77,8 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
 
         //Event object to store information
 
-        EventIncomingStruct eventNew = new EventIncomingStruct(eventName, "Going", "0/0", time, date);
+        EventIncomingStruct eventNew =
+                new EventIncomingStruct(eventName, "Going", "0/0", startTime, endTime, date);
 
         String eventId = mDatabase.push().getKey();
         mDatabase.child("users").child(user.getUid())
