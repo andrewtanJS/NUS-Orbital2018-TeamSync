@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+
+import static android.support.constraint.Constraints.TAG;
 
 
 /**
@@ -40,8 +43,6 @@ public class EventIncomingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_event_incoming, container, false);
-
-
 
         recyclerViewIncoming = (RecyclerView) view.findViewById(R.id.recycler_incoming);
         recyclerViewIncoming.setHasFixedSize(true);
@@ -66,8 +67,6 @@ public class EventIncomingFragment extends Fragment {
            }
         });
 
-
-
         return view;
     }
 
@@ -75,7 +74,9 @@ public class EventIncomingFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference eventsRef = reference.child("events");
+        DatabaseReference eventsRef = reference.child("users")
+                                                .child(user.getUid())
+                                                .child("events");
         eventsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -95,6 +96,7 @@ public class EventIncomingFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 //Handle error
+                Log.w(TAG, "Failed to read value.", databaseError.toException());
             }
         });
     }

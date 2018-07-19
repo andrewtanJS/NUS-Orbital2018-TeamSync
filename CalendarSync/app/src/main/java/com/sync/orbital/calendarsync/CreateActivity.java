@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,10 +19,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.sql.Time;
+
 public class CreateActivity extends AppCompatActivity implements View.OnClickListener{
 
     private EditText mEventNameField;
     private EditText mDateField;
+    private EditText mTimeField;
     Button buttonCreate;
 
     @Override
@@ -37,6 +41,7 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
 
         mEventNameField = findViewById(R.id.activity_name);
         mDateField = findViewById(R.id.action_pick_date);
+        mTimeField = findViewById(R.id.action_pick_time);
         buttonCreate = findViewById(R.id.action_create_event);
         buttonCreate.setOnClickListener(CreateActivity.this);
 
@@ -59,18 +64,21 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
 
     private void addEvent(){
         String eventName = mEventNameField.getText().toString().trim();
-        String dateTime = mDateField.getText().toString().trim();
+        String date = mDateField.getText().toString().trim();
+        String time= mTimeField.getText().toString().trim();
 
         //Get Firebase user
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         //Write message to database
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("events");
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
         //Event object to store information
 
-        EventIncomingStruct eventNew = new EventIncomingStruct(eventName, "Going", "0/0", "8.00pm", "2 July");
+        EventIncomingStruct eventNew = new EventIncomingStruct(eventName, "Going", "0/0", time, date);
 
         String eventId = mDatabase.push().getKey();
-        mDatabase.child(eventId).setValue(eventNew);
+        mDatabase.child("users").child(user.getUid())
+                .child("events").child(eventId).setValue(eventNew);
 
         Toast.makeText(this, "Event added", Toast.LENGTH_LONG).show();
     }
