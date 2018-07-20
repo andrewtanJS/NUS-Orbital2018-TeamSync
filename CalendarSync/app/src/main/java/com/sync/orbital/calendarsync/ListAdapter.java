@@ -36,6 +36,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         EventIncomingStruct eventInfo = mList.get(position);
         TextView name, status, attendees, startTime, startDate;
         String timestr, datestr;
+        Calendar eventCal;
 
         name = holder.name;
         status = holder.status;
@@ -43,17 +44,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         startTime = holder.time;
         startDate = holder.date;
 
-        timestr = eventInfo.getStartTime().get(Calendar.HOUR) + ":" +
-                eventInfo.getStartTime().get(Calendar.MINUTE);
-        datestr = eventInfo.getStartTime().get(Calendar.DAY_OF_MONTH) + "/" +
-                eventInfo.getStartTime().get(Calendar.MONTH) + "/" +
-                eventInfo.getStartTime().get(Calendar.YEAR);
+        eventCal = Calendar.getInstance();
 
         name.setText(eventInfo.getName());
         status.setText((eventInfo.getStatus()));
         attendees.setText(eventInfo.getAttendees());
-        startTime.setText(timestr);
-        startDate.setText(datestr);
+        startTime.setText(eventInfo.getStartTime());
+        startDate.setText(eventInfo.getStartDate());
 
  /*       switch(position%5) {
             case 0: holder.itemView.setBackgroundColor(Color.parseColor("#fff0b3")); break;

@@ -3,9 +3,11 @@ package com.sync.orbital.calendarsync;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -21,7 +23,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class CreateActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -55,7 +60,7 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
         btnStartDate.setOnClickListener(this);
         btnStartTime.setOnClickListener(this);
         btnEndDate.setOnClickListener(this);
-        btnStartTime.setOnClickListener(this);
+        btnEndTime.setOnClickListener(this);
 
         mEventNameField = findViewById(R.id.activity_name);
         buttonCreate = findViewById(R.id.action_create_event);
@@ -90,6 +95,9 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
 
                                 startDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                                 sD = true;
+                                startYear = year;
+                                startMonth = monthOfYear + 1;
+                                startDay = dayOfMonth;
                             }
                         }, startYear, startMonth, startDay);
 
@@ -108,6 +116,8 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
                                     startTime.setText(hourOfDay + ":" + minute);
                                 }
                                 sT = true;
+                                startHour = hourOfDay;
+                                startMinute = minute;
                             }
                         }, startHour, startMinute, false);
                 timeStartPickerDialog.show();
@@ -122,6 +132,9 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
 
                                 endDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                                 eD = true;
+                                endYear = year;
+                                endMonth = monthOfYear + 1;
+                                endDay = dayOfMonth;
                             }
                         }, endYear, endMonth, endDay);
                 dateEndPickerDialog.show();
@@ -139,6 +152,8 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
                                     endTime.setText(hourOfDay + ":" + minute);
                                 }
                                 eT = true;
+                                endHour = hourOfDay;
+                                endMinute = minute;
                             }
                         }, endHour, endMinute, false);
                 timeEndPickerDialog.show();
@@ -151,11 +166,21 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
     private void addEvent(){
         String eventName = mEventNameField.getText().toString().trim();
 
-        Calendar startTime = Calendar.getInstance();
-        Calendar endTime = Calendar.getInstance();
-        startTime.set(startYear, startMonth, startDay, startHour, startMinute);
-        endTime.set(endYear, endMonth, endDay, endHour, endMinute);
 
+        String startDateStr = String.format(Locale.US, "%02d/%02d/%04d",
+                                    startDay,
+                                    startMonth,
+                                    startYear);
+        String startTimeStr = String.format(Locale.US, "%02d:%02d",
+                                    startHour,
+                                    startMinute);
+        String endDateStr = String.format(Locale.US, "%02d/%02d/%04d",
+                                    endYear,
+                                    endMonth,
+                                    endDay);
+        String endTimeStr = String.format(Locale.US, "%02d:%02d",
+                                    endHour,
+                                    endMinute);
         //Get Firebase user
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         //Write message to database
@@ -164,7 +189,9 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
         //Event object to store information
 
         EventIncomingStruct eventNew =
-                new EventIncomingStruct(eventName, "Going", "0/0", startTime, endTime);
+                new EventIncomingStruct(eventName, "Going", "0/0",
+                        startDateStr, startTimeStr,
+                        endDateStr, endTimeStr);
 
         String eventId = mDatabase.push().getKey();
         mDatabase.child("users").child(user.getUid())

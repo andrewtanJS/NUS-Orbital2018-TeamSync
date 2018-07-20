@@ -179,10 +179,13 @@ public class CalendarFragment extends Fragment
                     String name = String.valueOf(dataSnap.child("name").getValue());
                     String status = String.valueOf(dataSnap.child("status").getValue());
                     String attendees = String.valueOf(dataSnap.child("attendees").getValue());
-                    Calendar startTime = (Calendar) dataSnap.child("startTime").getValue();
-                    Calendar endTime = (Calendar) dataSnap.child("endTime").getValue();
+                    String startDate =  String.valueOf(dataSnap.child("startDate").getValue());
+                    String startTime =  String.valueOf(dataSnap.child("startTime").getValue());
+                    String endDate =  String.valueOf(dataSnap.child("endDate").getValue());
+                    String endTime =  String.valueOf(dataSnap.child("endTime").getValue());
                     EventIncomingStruct events =
-                            new EventIncomingStruct(name, status, attendees, startTime, endTime);
+                            new EventIncomingStruct(name, status, attendees,
+                                    startDate, startTime, endDate, endTime);
                     eventsCallback.onCallBack(events);
                 }
             }
