@@ -12,6 +12,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
@@ -33,19 +34,26 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         EventIncomingStruct eventInfo = mList.get(position);
-        TextView name, status, attendees, startTime, date;
+        TextView name, status, attendees, startTime, startDate;
+        String timestr, datestr;
 
         name = holder.name;
         status = holder.status;
         attendees = holder.attendees;
         startTime = holder.time;
-        date = holder.date;
+        startDate = holder.date;
+
+        timestr = eventInfo.getStartTime().get(Calendar.HOUR) + ":" +
+                eventInfo.getStartTime().get(Calendar.MINUTE);
+        datestr = eventInfo.getStartTime().get(Calendar.DAY_OF_MONTH) + "/" +
+                eventInfo.getStartTime().get(Calendar.MONTH) + "/" +
+                eventInfo.getStartTime().get(Calendar.YEAR);
 
         name.setText(eventInfo.getName());
         status.setText((eventInfo.getStatus()));
         attendees.setText(eventInfo.getAttendees());
-        startTime.setText(eventInfo.getStartTime());
-        date.setText(eventInfo.getDate());
+        startTime.setText(timestr);
+        startDate.setText(datestr);
 
  /*       switch(position%5) {
             case 0: holder.itemView.setBackgroundColor(Color.parseColor("#fff0b3")); break;

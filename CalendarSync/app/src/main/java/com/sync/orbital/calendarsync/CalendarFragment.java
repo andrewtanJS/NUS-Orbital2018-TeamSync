@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,11 +23,20 @@ import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static android.support.constraint.Constraints.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,6 +50,7 @@ public class CalendarFragment extends Fragment
     static final int TYPE_THREE_DAY_VIEW = 2;
     static final int TYPE_WEEK_VIEW = 3;
     int calendarViewType = TYPE_THREE_DAY_VIEW;
+    private ArrayList<EventIncomingStruct> eventList;
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -67,6 +78,21 @@ public class CalendarFragment extends Fragment
         setHasOptionsMenu(true);
 
         ((MainActivity)getActivity()).setTitle("Calendar");
+
+        //Event info
+//        eventList = new ArrayList<>();
+//        getFirebaseData(new EventsCallback(){
+//            @Override
+//            public void onCallBack(EventIncomingStruct event){
+//                eventList.add(event);
+//            }
+//        });
+//
+//        for(EventIncomingStruct event: eventList) {
+//            int id = 0;
+//
+//            id++;
+//        }
 
         return view;
     }
@@ -137,6 +163,37 @@ public class CalendarFragment extends Fragment
         return true;
     }
 
+    private void getFirebaseData(final EventsCallback eventsCallback) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference eventsRef = reference.child("users")
+                .child(user.getUid())
+                .child("events");
+        eventsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //Result will be holded Here
+                for (DataSnapshot dataSnap: dataSnapshot.getChildren()){
+
+                    String name = String.valueOf(dataSnap.child("name").getValue());
+                    String status = String.valueOf(dataSnap.child("status").getValue());
+                    String attendees = String.valueOf(dataSnap.child("attendees").getValue());
+                    Calendar startTime = (Calendar) dataSnap.child("startTime").getValue();
+                    Calendar endTime = (Calendar) dataSnap.child("endTime").getValue();
+                    EventIncomingStruct events =
+                            new EventIncomingStruct(name, status, attendees, startTime, endTime);
+                    eventsCallback.onCallBack(events);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                //Handle error
+                Log.w(TAG, "Failed to read value.", databaseError.toException());
+            }
+        });
+    }
 
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {

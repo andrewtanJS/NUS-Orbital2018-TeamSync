@@ -33,41 +33,56 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Date"/>
+            android:text="Start Date and Time"/>
 
         <EditText
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:id="@+id/action_pick_date"
-            android:clickable="true"
-            android:inputType="date"
-            android:hint="DD/MM/YYYY"/>
+            android:id="@+id/start_date"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SELECT DATE"
+            android:id="@+id/btn_date_start" />
+
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/start_time"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SELECT TIME"
+            android:id="@+id/btn_time_start" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Start Time"/>
+            android:text="End Date and Time"/>
 
         <EditText
-            android:id="@+id/action_pick_start_time"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/end_date"/>
+
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="24dp"
-            android:inputType="time"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="End Time"/>
+            android:text="SELECT DATE"
+            android:id="@+id/btn_date_end" />
 
         <EditText
-            android:id="@+id/action_pick_end_time"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/end_time" />
+
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="24dp"
-            android:inputType="time"/>
+            android:text="SELECT TIME"
+            android:id="@+id/btn_time_end"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -76,9 +91,5 @@
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
             android:text="Create Event"/>
-
-
     </LinearLayout>
-
-
 </LinearLayout>

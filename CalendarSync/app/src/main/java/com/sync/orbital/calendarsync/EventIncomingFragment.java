@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import static android.support.constraint.Constraints.TAG;
 
@@ -86,11 +87,10 @@ public class EventIncomingFragment extends Fragment {
                     String name = String.valueOf(dataSnap.child("name").getValue());
                     String status = String.valueOf(dataSnap.child("status").getValue());
                     String attendees = String.valueOf(dataSnap.child("attendees").getValue());
-                    String startTime = String.valueOf(dataSnap.child("startTime").getValue());
-                    String endTime = String.valueOf(dataSnap.child("endTime").getValue());
-                    String date = String.valueOf(dataSnap.child("date").getValue());
+                    Calendar startTime = (Calendar) dataSnap.child("startTime").getValue();
+                    Calendar endTime = (Calendar) dataSnap.child("endTime").getValue();
                     EventIncomingStruct events =
-                            new EventIncomingStruct(name, status, attendees, startTime, endTime, date);
+                            new EventIncomingStruct(name, status, attendees, startTime, endTime);
                     eventsCallback.onCallBack(events);
                 }
             }
