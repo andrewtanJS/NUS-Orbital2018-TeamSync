@@ -31,10 +31,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static android.support.constraint.Constraints.TAG;
 
@@ -80,21 +82,46 @@ public class CalendarFragment extends Fragment
         ((MainActivity)getActivity()).setTitle("Calendar");
 
         //Event info
-//        eventList = new ArrayList<>();
-//        getFirebaseData(new EventsCallback(){
-//            @Override
-//            public void onCallBack(EventIncomingStruct event){
-//                eventList.add(event);
-//            }
-//        });
-//
-//        for(EventIncomingStruct event: eventList) {
-//            int id = 0;
-//
-//            id++;
-//        }
+        eventList = new ArrayList<>();
+        getFirebaseData(new EventsCallback(){
+            @Override
+            public void onCallBack(EventIncomingStruct event){
+                eventList.add(event);
+            }
+        });
 
         return view;
+    }
+
+    @Override
+    public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
+        // The list of events in the week view
+        List<WeekViewEvent> events = new ArrayList<>();
+        for(EventIncomingStruct event: eventList) {
+            int id = 0;
+            String eventStartTime = event.getStartTime();
+            String eventStartDate = event.getStartDate();
+            String eventEndTime = event.getEndTime();
+            String eventEndDate = event.getEndDate();
+            String[] strStTime = eventStartTime.split(":");
+            String[] strStDate = eventStartDate.split("/");
+            String[] strEndTime = eventEndTime.split(":");
+            String[] strEndDate = eventEndDate.split("/");
+            WeekViewEvent wkEvent = new WeekViewEvent(id, event.getName(),
+                    Integer.parseInt(strStDate[2]),
+                    Integer.parseInt(strStDate[1]),
+                    Integer.parseInt(strStDate[0]),
+                    Integer.parseInt(strStTime[0]),
+                    Integer.parseInt(strStTime[1]),
+                    Integer.parseInt(strEndDate[2]),
+                    Integer.parseInt(strEndDate[1]),
+                    Integer.parseInt(strEndDate[0]),
+                    Integer.parseInt(strEndTime[0]),
+                    Integer.parseInt(strEndTime[1]));
+            events.add(wkEvent);
+            id++;
+        }
+        return events;
     }
 
     @Override
@@ -198,11 +225,33 @@ public class CalendarFragment extends Fragment
         });
     }
 
-    @Override
-    public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
-        // Populate the week view with some events.
-        List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
-        return events;
+
+    /**
+     * Set up a date time interpreter which will show short date values when in week view and long
+     * date values otherwise.
+     * @param shortDate True if the date values should be short.
+     */
+    private void setupDateTimeInterpreter(final boolean shortDate) {
+        calendarView.setDateTimeInterpreter(new DateTimeInterpreter() {
+            @Override
+            public String interpretDate(Calendar date) {
+                SimpleDateFormat weekdayNameFormat = new SimpleDateFormat("EEE", Locale.getDefault());
+                String weekday = weekdayNameFormat.format(date.getTime());
+                SimpleDateFormat format = new SimpleDateFormat(" M/d", Locale.getDefault());
+
+                // All android api level do not have a standard way of getting the first letter of
+                // the week day name. Hence we get the first char programmatically.
+                // Details: http://stackoverflow.com/questions/16959502/get-one-letter-abbreviation-of-week-day-of-a-date-in-java#answer-16959657
+                if (shortDate)
+                    weekday = String.valueOf(weekday.charAt(0));
+                return weekday.toUpperCase() + format.format(date.getTime());
+            }
+
+            @Override
+            public String interpretTime(int hour) {
+                return hour > 11 ? (hour - 12) + " PM" : (hour == 0 ? "12 AM" : hour + " AM");
+            }
+        });
     }
 
     protected String getEventTitle(Calendar time) {
