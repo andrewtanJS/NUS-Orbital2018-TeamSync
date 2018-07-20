@@ -175,9 +175,9 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
                                     startHour,
                                     startMinute);
         String endDateStr = String.format(Locale.US, "%02d/%02d/%04d",
-                                    endYear,
+                                    endDay,
                                     endMonth,
-                                    endDay);
+                                    endYear);
         String endTimeStr = String.format(Locale.US, "%02d:%02d",
                                     endHour,
                                     endMinute);
