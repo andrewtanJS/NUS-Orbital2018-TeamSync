@@ -2,6 +2,7 @@ package com.sync.orbital.calendarsync;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,13 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.w3c.dom.Text;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import id.zelory.compressor.Compressor;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -91,7 +99,10 @@ public class ProfileActivity extends AppCompatActivity {
 
                 mName.setText(name);
                 mStatus.setText(status);
-                Picasso.get().load(image).into(mProfilePicture);
+
+                if(!image.equals("default")) {
+                    Picasso.get().load(image).placeholder(R.drawable.default_user).into(mProfilePicture);
+                }
             }
 
             @Override
@@ -178,9 +189,25 @@ public class ProfileActivity extends AppCompatActivity {
                 mDialog.show();
 
                 Uri resultUri = result.getUri();
+
+                File thumb_filePath = new File(resultUri.getPath());
+
                 final String currentUid = mCurrentUser.getUid();
 
+                Bitmap thumb_bitmap = new Compressor(this)
+                        .setMaxHeight(200)
+                        .setMaxWidth(200)
+                        .setQuality(75)
+                        .compressToBitmap(thumb_filePath);
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                final byte[] thumb_byte = baos.toByteArray();
+
                 StorageReference filepath = mStorageRef.child("profile_pictures").child(currentUid + ".jpg");
+                final StorageReference thumbFilepath = mStorageRef.child("profile_pictures").child("thumbs").child(currentUid + ".jpg");
+
+
                 filepath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
@@ -190,7 +217,43 @@ public class ProfileActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
 
-                                    String downloadUrl = uri.toString();
+                                    final String downloadUrl = uri.toString();
+
+                                    UploadTask uploadTask = thumbFilepath.putBytes(thumb_byte);
+                                    uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> thumb_task) {
+                                            if (thumb_task.isSuccessful()){
+                                                mStorageRef.child("profile_pictures").child("thumbs").child(currentUid + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                    @Override
+                                                    public void onSuccess(Uri thumb_uri) {
+                                                        String thumbDownloadUrl = thumb_uri.toString();
+
+                                                        Map updateHM = new HashMap();
+                                                        updateHM.put("image",downloadUrl);
+                                                        updateHM.put("thumb_image", thumbDownloadUrl);
+                                                        mUserDatabase.updateChildren(updateHM).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+
+
+                                                                if (task.isSuccessful()){
+
+                                                                    mDialog.dismiss();
+                                                                    Toast.makeText(getApplicationContext(),"Success.", Toast.LENGTH_LONG).show();
+
+                                                                }
+
+                                                            }
+                                                        });
+
+                                                    }
+                                                });
+                                            }
+
+                                        }
+                                    });
+
 
                                     mUserDatabase.child("image").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
