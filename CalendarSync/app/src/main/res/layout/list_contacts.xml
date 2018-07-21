@@ -8,55 +8,29 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="6dp"
+        android:layout_margin="10dp"
         android:orientation="horizontal">
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/profile_pic_contacts"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/baby_dory"
+            android:src="@drawable/default_user"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="12dp"
-            app:civ_border_color="#00FF00"
-            app:civ_border_width="2dp"
             />
 
         <TextView
             android:id="@+id/name_contacts_all"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Jake Peralta"
+            android:text="Name"
             android:textSize="22sp"
             android:textColor="@color/colorBlack"
             android:gravity="center_vertical"
             />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="end"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp">
 
-            <TextView
-                android:id="@+id/event_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="8:00pm"
-                android:textSize="22sp"
-                android:textColor="@color/colorAccent"/>
-
-            <TextView
-                android:id="@+id/_event_date"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="23 July"
-                android:textSize="15sp"
-                android:textColor="@color/colorAccent"/>
-
-        </LinearLayout>
 
 
     </LinearLayout>

@@ -40,6 +40,7 @@ dependencies {
     implementation 'com.github.alamkanak:android-week-view:1.2.6'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.firebaseui:firebase-ui-database:3.2.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -83,12 +83,12 @@ public class CalendarFragment extends Fragment
 
         //Event info
         eventList = new ArrayList<>();
-        getFirebaseData(new EventsCallback(){
+ /*       getFirebaseData(new EventsCallback(){
             @Override
             public void onCallBack(EventIncomingStruct event){
                 eventList.add(event);
             }
-        });
+        });*/
 
         return view;
     }
