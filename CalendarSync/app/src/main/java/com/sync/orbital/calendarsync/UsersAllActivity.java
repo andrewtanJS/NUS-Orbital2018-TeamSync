@@ -1,6 +1,7 @@
 package com.sync.orbital.calendarsync;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -66,6 +67,17 @@ public class UsersAllActivity extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull UsersViewHolder holder, int position, @NonNull ContactsAllStruct model) {
                 holder.setName(model.name);
                 holder.setThumbImage(model.thumb_image, getApplicationContext());
+
+                final String userid = getRef(position).getKey();
+
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent_prof = new Intent(UsersAllActivity.this, UsersProfileActivity.class);
+                        intent_prof.putExtra("user_id", userid);
+                        startActivity(intent_prof);
+                    }
+                });
             }
 
             @NonNull

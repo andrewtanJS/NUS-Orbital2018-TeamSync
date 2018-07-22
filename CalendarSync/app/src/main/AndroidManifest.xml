@@ -48,7 +48,8 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".SignInActivity" />
-        <activity android:name=".UsersAllActivity"></activity>
+        <activity android:name=".UsersAllActivity" />
+        <activity android:name=".UsersProfileActivity"></activity>
     </application>
 
 </manifest>
