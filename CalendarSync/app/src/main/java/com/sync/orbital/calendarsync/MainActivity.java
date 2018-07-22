@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         contactFragment = new ContactFragment();
         calendarFragment = new CalendarFragment();;
 
-
         myMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

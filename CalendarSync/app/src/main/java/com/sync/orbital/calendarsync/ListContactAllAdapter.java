@@ -40,7 +40,7 @@ public class ListContactAllAdapter extends RecyclerView.Adapter<ListContactAllAd
         picture = holder.picture;
         name = holder.name;
 
-        picture.setImageResource(contactsInfo.getImage());
+ //       picture.setImageResource(contactsInfo.getImage());
         name.setText(contactsInfo.getName());
 
     }

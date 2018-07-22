@@ -1,19 +1,25 @@
 package com.sync.orbital.calendarsync;
 
 public class ContactsAllStruct {
-    private int image;
-    private String name;
+    String image;
+    String name;
+    String thumb_image;
 
-    public ContactsAllStruct(int image, String name) {
-        this.image = image;
-        this.name = name;
+    public ContactsAllStruct(){
+
     }
 
-    public int getImage() {
+    public ContactsAllStruct(String image, String name) {
+        this.image = image;
+        this.name = name;
+        this.thumb_image = thumb_image;
+    }
+
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -24,4 +30,14 @@ public class ContactsAllStruct {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getThumbImage() {
+        return thumb_image;
+    }
+
+    public void setThumbImage(String thumb_image) {
+        this.thumb_image = thumb_image;
+    }
+
+
 }

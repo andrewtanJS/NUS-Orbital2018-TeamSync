@@ -11,7 +11,13 @@
     <item
         android:id="@+id/action_settings_contacts"
         android:icon="@drawable/ic_settings_24dp"
-        android:title="@string/action_settings"
+        android:title="Settings"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_all_users"
+        android:icon="@drawable/ic_settings_24dp"
+        android:title="All Users"
         app:showAsAction="ifRoom"/>
 
 </menu>

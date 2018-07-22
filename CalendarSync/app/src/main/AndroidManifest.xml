@@ -35,7 +35,7 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:parentActivityName=".StartActivity"/>
+            android:parentActivityName=".StartActivity" />
         <activity android:name=".StartActivity" />
         <activity
             android:name=".RegisterActivity"
@@ -47,7 +47,8 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".SignInActivity"></activity>
+        <activity android:name=".SignInActivity" />
+        <activity android:name=".UsersAllActivity"></activity>
     </application>
 
 </manifest>
