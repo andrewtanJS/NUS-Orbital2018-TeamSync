@@ -202,7 +202,6 @@ public class CalendarFragment extends Fragment
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //Result will be holded Here
                 for (DataSnapshot dataSnap: dataSnapshot.getChildren()){
-
                     String name = String.valueOf(dataSnap.child("name").getValue());
                     String status = String.valueOf(dataSnap.child("status").getValue());
                     String attendees = String.valueOf(dataSnap.child("attendees").getValue());

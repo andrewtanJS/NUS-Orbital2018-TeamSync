@@ -39,11 +39,10 @@ public class MainActivity extends AppCompatActivity {
         myMainFrame = (FrameLayout) findViewById(R.id.main_frame);
         myMainNav = (BottomNavigationView) findViewById(R.id.main_nav);
 
-        calendarFragment = new CalendarFragment();
         eventFragment = new EventFragment();
         contactFragment = new ContactFragment();
+        calendarFragment = new CalendarFragment();;
 
-        setFragment(calendarFragment);
 
         myMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -77,15 +76,15 @@ public class MainActivity extends AppCompatActivity {
             Intent startIntent = new Intent(MainActivity.this, StartActivity.class);
             startActivity(startIntent);
             finish();
+        } else {
+            setFragment(calendarFragment);
         }
     }
 
     private void setFragment(Fragment fragment) {
-
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
         fragmentTransaction.commit();
-
     }
 
 //    @Override
