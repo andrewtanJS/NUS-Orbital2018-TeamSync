@@ -1,5 +1,21 @@
 package com.sync.orbital.calendarsync;
 
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
+import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
+import com.google.api.client.util.store.FileDataStoreFactory;
+import com.google.api.services.calendar.CalendarScopes;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.Events;
+
+
 import android.content.Intent;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
@@ -37,6 +53,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.security.GeneralSecurityException;
+import java.util.Collections;
+import java.util.List;
 
 import static android.support.constraint.Constraints.TAG;
 
@@ -65,6 +87,7 @@ public class CalendarFragment extends Fragment
 
         //Event info
         eventList = new ArrayList<>();
+
         getFirebaseData(new EventsCallback(){
             @Override
             public void onCallBack(EventIncomingStruct event){
@@ -129,6 +152,7 @@ public class CalendarFragment extends Fragment
             }
             id++;
         }
+
         return events;
     }
 
@@ -240,6 +264,7 @@ public class CalendarFragment extends Fragment
     }
 
 
+
     /**
      * Set up a date time interpreter which will show short date values when in week view and long
      * date values otherwise.
@@ -269,7 +294,12 @@ public class CalendarFragment extends Fragment
     }
 
     protected String getEventTitle(Calendar time) {
-        return String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH)+1, time.get(Calendar.DAY_OF_MONTH));
+        return String.format(Locale.US,
+                "Event of %02d:%02d %s/%d",
+                time.get(Calendar.HOUR_OF_DAY),
+                time.get(Calendar.MINUTE),
+                time.get(Calendar.MONTH)+1,
+                time.get(Calendar.DAY_OF_MONTH));
     }
 
     @Override

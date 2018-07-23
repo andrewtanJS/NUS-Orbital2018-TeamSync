@@ -166,7 +166,6 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
     private void addEvent(){
         String eventName = mEventNameField.getText().toString().trim();
 
-
         String startDateStr = String.format(Locale.US, "%02d/%02d/%04d",
                                     startDay,
                                     startMonth,
