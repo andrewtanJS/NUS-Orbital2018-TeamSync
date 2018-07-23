@@ -62,8 +62,22 @@ public class CalendarFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
+
+        //Event info
+        eventList = new ArrayList<>();
+        getFirebaseData(new EventsCallback(){
+            @Override
+            public void onCallBack(EventIncomingStruct event){
+                eventList.add(event);
+                calendarView.notifyDatasetChanged();
+            }
+        });
+
         // Get a reference for the week view in the layout.
         calendarView = view.findViewById(R.id.weekView);
+
+        // refreshes the view
+        calendarView.notifyDatasetChanged();
 
         // Show a toast message about the touched event.
         calendarView.setOnEventClickListener(this);
@@ -80,15 +94,6 @@ public class CalendarFragment extends Fragment
         setHasOptionsMenu(true);
 
         ((MainActivity)getActivity()).setTitle("Calendar");
-
-        //Event info
-        eventList = new ArrayList<>();
-        getFirebaseData(new EventsCallback(){
-            @Override
-            public void onCallBack(EventIncomingStruct event){
-                eventList.add(event);
-            }
-        });
 
         return view;
     }
@@ -107,18 +112,21 @@ public class CalendarFragment extends Fragment
             String[] strStDate = eventStartDate.split("/");
             String[] strEndTime = eventEndTime.split(":");
             String[] strEndDate = eventEndDate.split("/");
-            WeekViewEvent wkEvent = new WeekViewEvent(id, event.getName(),
-                    Integer.parseInt(strStDate[2]),
-                    Integer.parseInt(strStDate[1]),
-                    Integer.parseInt(strStDate[0]),
-                    Integer.parseInt(strStTime[0]),
-                    Integer.parseInt(strStTime[1]),
-                    Integer.parseInt(strEndDate[2]),
-                    Integer.parseInt(strEndDate[1]),
-                    Integer.parseInt(strEndDate[0]),
-                    Integer.parseInt(strEndTime[0]),
-                    Integer.parseInt(strEndTime[1]));
-            events.add(wkEvent);
+            if (Integer.parseInt(strStDate[2]) == newYear
+                    && Integer.parseInt(strStDate[1]) == newMonth) {
+                WeekViewEvent wkEvent = new WeekViewEvent(id, event.getName(),
+                        Integer.parseInt(strStDate[2]),
+                        Integer.parseInt(strStDate[1]),
+                        Integer.parseInt(strStDate[0]),
+                        Integer.parseInt(strStTime[0]),
+                        Integer.parseInt(strStTime[1]),
+                        Integer.parseInt(strEndDate[2]),
+                        Integer.parseInt(strEndDate[1]),
+                        Integer.parseInt(strEndDate[0]),
+                        Integer.parseInt(strEndTime[0]),
+                        Integer.parseInt(strEndTime[1]));
+                events.add(wkEvent);
+            }
             id++;
         }
         return events;
@@ -156,6 +164,8 @@ public class CalendarFragment extends Fragment
                     calendarView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
                     calendarView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
                     calendarView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
+                    // refreshes the view
+                    calendarView.notifyDatasetChanged();
                 }
                 break;
             case R.id.three_day_view:
@@ -167,6 +177,8 @@ public class CalendarFragment extends Fragment
                     calendarView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
                     calendarView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
                     calendarView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
+                    // refreshes the view
+                    calendarView.notifyDatasetChanged();
                 }
                 break;
             case R.id.week_view:
@@ -178,6 +190,9 @@ public class CalendarFragment extends Fragment
                     calendarView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
                     calendarView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
                     calendarView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
+                    calendarView.setDayNameLength(WeekView.LENGTH_SHORT);
+                    // refreshes the view
+                    calendarView.notifyDatasetChanged();
                 }
                 break;
             case R.id.action_settings_cal:
