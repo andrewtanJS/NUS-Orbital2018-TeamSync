@@ -32,10 +32,6 @@
             android:name=".CreateActivity"
             android:label="@string/title_activity_create"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login"
-            android:parentActivityName=".StartActivity" />
         <activity android:name=".StartActivity" />
         <activity
             android:name=".RegisterActivity"
@@ -49,7 +45,11 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".SignInActivity" />
         <activity android:name=".UsersAllActivity" />
-        <activity android:name=".UsersProfileActivity"></activity>
+        <activity android:name=".UsersProfileActivity" />
+        <activity
+            android:name=".GoogleSignInActivity"
+            android:label="@string/title_activity_google_sign_in"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

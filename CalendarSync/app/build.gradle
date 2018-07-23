@@ -46,6 +46,8 @@ dependencies {
     implementation 'com.google.apis:google-api-services-calendar:v3-rev305-1.23.0'
     implementation 'com.firebaseui:firebase-ui-database:3.2.2'
     implementation 'id.zelory:compressor:2.0.0'
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+    implementation 'com.google.firebase:firebase-auth:16.0.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

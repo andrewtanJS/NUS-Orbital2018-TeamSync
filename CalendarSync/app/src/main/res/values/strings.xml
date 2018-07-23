@@ -135,5 +135,6 @@
     <string name="already_have_account">Already have account</string>
     <string name="account_status">Account Status</string>
     <string name="save_changes">Save Changes</string>
+    <string name="title_activity_google_sign_in">GoogleSignInActivity</string>
 
 </resources>
