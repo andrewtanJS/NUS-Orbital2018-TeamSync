@@ -42,12 +42,12 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
-        mGoogleBtn.setOnClickListener(new View.OnClickListener() {
+    /*    mGoogleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent google_intent = new Intent(StartActivity.this, GoogleSignInActivity.class);
                 startActivity(google_intent);
             }
-        });
+        }); */
     }
 }

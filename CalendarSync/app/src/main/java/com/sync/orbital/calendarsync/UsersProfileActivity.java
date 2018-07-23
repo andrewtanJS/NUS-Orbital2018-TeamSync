@@ -205,11 +205,11 @@ public class UsersProfileActivity extends AppCompatActivity {
                 else if (mCurrentState==2){
                     final String currentDate = DateFormat.getDateTimeInstance().format(new Date());
 
-                    mFriendDatabase.child(mCurrentUser.getUid()).child(user_id)
+                    mFriendDatabase.child(mCurrentUser.getUid()).child(user_id).child("date")
                             .setValue(currentDate).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            mFriendDatabase.child(user_id).child(mCurrentUser.getUid())
+                            mFriendDatabase.child(user_id).child(mCurrentUser.getUid()).child("date")
                                     .setValue(currentDate).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
@@ -259,6 +259,13 @@ public class UsersProfileActivity extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+
+        mDeclineBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
