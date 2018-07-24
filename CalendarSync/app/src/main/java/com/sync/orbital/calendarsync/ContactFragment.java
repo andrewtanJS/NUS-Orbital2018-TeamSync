@@ -62,6 +62,8 @@ public class ContactFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case (R.id.action_add_contacts):
+                Intent intent_search = new Intent(getActivity(), ContactSearchActivity.class);
+                startActivity(intent_search);
                 return true;
             case (R.id.action_settings_contacts):
                 Intent intent_set = new Intent(getActivity(), ProfileActivity.class);
