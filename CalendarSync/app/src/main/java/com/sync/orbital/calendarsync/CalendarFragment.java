@@ -188,6 +188,7 @@ public class CalendarFragment extends Fragment
                     calendarView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
                     calendarView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
                     calendarView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
+                    calendarView.setDayNameLength(WeekView.LENGTH_LONG);
                     // refreshes the view
                     calendarView.notifyDatasetChanged();
                 }
@@ -201,6 +202,7 @@ public class CalendarFragment extends Fragment
                     calendarView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
                     calendarView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
                     calendarView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
+                    calendarView.setDayNameLength(WeekView.LENGTH_LONG);
                     // refreshes the view
                     calendarView.notifyDatasetChanged();
                 }
