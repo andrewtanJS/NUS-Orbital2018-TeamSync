@@ -39,8 +39,8 @@ public class ContactFragment extends Fragment {
 
         //Tabs
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.AddFragment(new ContactChatsFragment(), "Chats");
         adapter.AddFragment(new ContactAllFragment(), "All");
+        adapter.AddFragment(new ContactGroupFragment(), "Group");
         adapter.AddFragment(new ContactRequestFragment(), "Request");
         viewPager.setAdapter(adapter);
 

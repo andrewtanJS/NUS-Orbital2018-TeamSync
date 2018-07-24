@@ -50,7 +50,8 @@
             android:name=".GoogleSignInActivity"
             android:label="@string/title_activity_google_sign_in"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ContactSearchActivity"></activity>
+        <activity android:name=".ContactSearchActivity" />
+        <activity android:name=".GroupCreateActivity"></activity>
     </application>
 
 </manifest>

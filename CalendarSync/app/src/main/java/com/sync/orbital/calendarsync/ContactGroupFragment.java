@@ -5,14 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -26,26 +27,24 @@ import com.google.firebase.database.ValueEventListener;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ContactAllFragment extends Fragment {
+public class ContactGroupFragment extends Fragment {
 
-    private RecyclerView mFriendsList;
+    private FloatingActionButton mCreateBtn;
 
-    private DatabaseReference mFriendsDatabase;
-    private DatabaseReference mUsersDatabase;
+    private RecyclerView mGroupList;
+
+    private DatabaseReference mGroupDatabase;
+    private DatabaseReference mUserDatabase;
 
     private FirebaseAuth mAuth;
 
     private String mCurrentUid;
 
-    private View view;
-
-    public ContactAllFragment() {
+    public ContactGroupFragment() {
         // Required empty public constructor
     }
 
@@ -54,19 +53,31 @@ public class ContactAllFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_contact_all, container, false);
+        View view = inflater.inflate(R.layout.fragment_contact_group, container, false);
 
-        mFriendsList = (RecyclerView) view.findViewById(R.id.friends_list);
+        mGroupList = (RecyclerView) view.findViewById(R.id.group_list);
 
         mAuth = FirebaseAuth.getInstance();
 
         mCurrentUid = mAuth.getCurrentUser().getUid();
 
-        mFriendsDatabase = FirebaseDatabase.getInstance().getReference().child("Friends").child(mCurrentUid);
-        mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups");
+        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUid).child("Groups");
 
-        mFriendsList.setHasFixedSize(true);
-        mFriendsList.setLayoutManager(new LinearLayoutManager(getContext()));
+        mGroupList.setHasFixedSize(true);
+        mGroupList.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+        mCreateBtn = (FloatingActionButton) view.findViewById(R.id.group_add_button);
+
+        mCreateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_create = new Intent(getContext(), GroupCreateActivity.class);
+                startActivity(intent_create);
+            }
+        });
+
 
         return view;
     }
@@ -74,77 +85,71 @@ public class ContactAllFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        startListening();
+//        startListening();
     }
 
     public void startListening() {
         Query query = FirebaseDatabase.getInstance()
                 .getReference()
-                .child("Friends")
+                .child("Users")
                 .child(mCurrentUid)
+                .child("Groups")
                 .limitToLast(50);
 
-        FirebaseRecyclerOptions<ContactsAllStruct> options =
-                new FirebaseRecyclerOptions.Builder<ContactsAllStruct>()
-                        .setQuery(query, ContactsAllStruct.class)
+        FirebaseRecyclerOptions<GroupStruct> options =
+                new FirebaseRecyclerOptions.Builder<GroupStruct>()
+                        .setQuery(query, GroupStruct.class)
                         .build();
 
-        FirebaseRecyclerAdapter firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<ContactsAllStruct, FriendsViewHolder>(options) {
+        FirebaseRecyclerAdapter firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<GroupStruct, GroupViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull final FriendsViewHolder holder, int position, @NonNull ContactsAllStruct model) {
+            protected void onBindViewHolder(@NonNull final GroupViewHolder holder, int position, @NonNull GroupStruct model) {
 //                holder.setName(model.name);
 //                holder.setThumbImage(model.thumb_image, getApplicationContext());
 
-                final String userid = getRef(position).getKey();
+                final String groupid = getRef(position).getKey();
+                Toast.makeText(getContext(), groupid, Toast.LENGTH_LONG).show();
 
-                mUsersDatabase.child(userid).addValueEventListener(new ValueEventListener() {
+/*                mGroupDatabase.child(groupid).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String userName = dataSnapshot.child("name").getValue().toString();
-                        String userThumb = dataSnapshot.child("thumb_image").getValue().toString();
+                    //    String userThumb = dataSnapshot.child("thumb_image").getValue().toString();
 
                         holder.setName(userName);
-                        holder.setThumbImage(userThumb, getContext());
+                    //    holder.setThumbImage(userThumb, getContext());
 
-                        holder.mView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent_prof = new Intent(getContext(), UsersProfileActivity.class);
-                                intent_prof.putExtra("user_id", userid);
-                                startActivity(intent_prof);
-                            }
-                        });
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
-                });
+                });*/
 
 
             }
 
             @NonNull
             @Override
-            public FriendsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            public GroupViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.list_contacts, parent, false);
+                        .inflate(R.layout.list_group, parent, false);
 
-                return new FriendsViewHolder(view);
+                return new GroupViewHolder(view);
             }
 
         };
 
-        mFriendsList.setAdapter(firebaseRecyclerAdapter);
+        mGroupList.setAdapter(firebaseRecyclerAdapter);
         firebaseRecyclerAdapter.startListening();
     }
 
-    public static class FriendsViewHolder extends RecyclerView.ViewHolder {
+    public static class GroupViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
 
-        public FriendsViewHolder(View itemView) {
+        public GroupViewHolder(View itemView) {
             super(itemView);
 
             mView = itemView;
@@ -164,4 +169,5 @@ public class ContactAllFragment extends Fragment {
 
 
     }
+
 }

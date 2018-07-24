@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GroupCreateActivity">
+
+    <include
+        android:id="@+id/group_create_toolbar"
+        layout="@layout/toolbar" />
+
+    <ImageButton
+        android:id="@+id/group_create_pic"
+        android:layout_width="65dp"
+        android:layout_height="66dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="74dp"
+        app:srcCompat="@drawable/ic_people_black_24dp" />
+
+    <EditText
+        android:id="@+id/group_create_name"
+        android:layout_width="255dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="109dp"
+        android:layout_marginTop="85dp"
+        android:hint="Group Chat Name" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/group_create_friends_list"
+        android:layout_width="match_parent"
+        android:layout_height="342dp"
+        android:layout_alignBottom="@id/group_create_button"
+        android:layout_alignTop="@id/group_create_name"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="66dp">
+
+
+    </android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/group_create_button"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/group_create_pic"
+        android:layout_marginBottom="14dp"
+        android:text="Create"
+        android:textColor="@color/colorWhite"
+        android:backgroundTint="@color/colorPrimary"/>
+
+</RelativeLayout>

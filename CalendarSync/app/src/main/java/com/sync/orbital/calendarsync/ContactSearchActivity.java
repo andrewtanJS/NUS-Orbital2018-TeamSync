@@ -49,6 +49,9 @@ public class ContactSearchActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.contacts_search_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Search Users");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         mSearchField = (EditText) findViewById(R.id.search_name);
         mSearchBtn = (ImageButton) findViewById(R.id.search_name_button);
@@ -75,6 +78,12 @@ public class ContactSearchActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     private void firebaseUserSearch(String searchText) {
