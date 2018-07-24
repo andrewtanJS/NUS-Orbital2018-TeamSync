@@ -26,6 +26,7 @@ import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class CreateActivity extends AppCompatActivity implements View.OnClickListener{
@@ -76,6 +77,7 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View item){
+        Calendar now = Calendar.getInstance();
         switch (item.getId()) {
             case R.id.action_create_event:
                 if (sT && sD && eT && eD) {
@@ -99,8 +101,10 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
                                 startMonth = monthOfYear + 1;
                                 startDay = dayOfMonth;
                             }
-                        }, startYear, startMonth, startDay);
-
+                        }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DATE));
+                dateStartPickerDialog.updateDate(now.get(Calendar.YEAR),
+                        now.get(Calendar.MONTH),
+                        now.get(Calendar.DATE));
                 dateStartPickerDialog.show();
                 break;
             case R.id.btn_time_start:
@@ -136,7 +140,7 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
                                 endMonth = monthOfYear + 1;
                                 endDay = dayOfMonth;
                             }
-                        }, endYear, endMonth, endDay);
+                        }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DATE));
                 dateEndPickerDialog.show();
                 break;
             case R.id.btn_time_end:
