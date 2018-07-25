@@ -17,6 +17,7 @@ import com.google.api.services.calendar.model.Events;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -124,9 +125,17 @@ public class CalendarFragment extends Fragment
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
         // The list of events in the week view
+        int[] colors =
+                {
+                        getResources().getColor(R.color.eventColor1),
+                        getResources().getColor(R.color.eventColor2),
+                        getResources().getColor(R.color.eventColor3),
+                        getResources().getColor(R.color.eventColor4),
+                        getResources().getColor(R.color.eventColor5),
+                };
         List<WeekViewEvent> events = new ArrayList<>();
+        int id = 0;
         for(EventIncomingStruct event: eventList) {
-            int id = 0;
             String eventStartTime = event.getStartTime();
             String eventStartDate = event.getStartDate();
             String eventEndTime = event.getEndTime();
@@ -148,6 +157,7 @@ public class CalendarFragment extends Fragment
                         Integer.parseInt(strEndDate[0]),
                         Integer.parseInt(strEndTime[0]),
                         Integer.parseInt(strEndTime[1]));
+                wkEvent.setColor(colors[id % 5]);
                 events.add(wkEvent);
             }
             id++;

@@ -233,7 +233,7 @@ public class GoogleSignInActivity extends AppCompatActivity {
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         // Load client secrets.
         InputStream in = CalendarFragment.class
-                .getResourceAsStream(CLIENT_SECRET_DIR);
+                 .getResourceAsStream(CLIENT_SECRET_DIR);
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
         // Build flow and trigger user authorization request.

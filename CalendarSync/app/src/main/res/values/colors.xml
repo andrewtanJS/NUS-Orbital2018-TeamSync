@@ -7,4 +7,9 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorWhiteTransparent">#80ffffff</color>
     <color name="colorBlack">#000000</color>
+    <color name="eventColor1">#9932CC</color>
+    <color name="eventColor2">#e0c24b</color>
+    <color name="eventColor3">#ad2680</color>
+    <color name="eventColor4">#de8a7a</color>
+    <color name="eventColor5">#c7cc49</color>
 </resources>
