@@ -83,8 +83,8 @@ public class GroupCreateActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                     }
                 });
-                mUsersDatabase.child(mCurrentUid).child("Groups").child(groupId).setValue(groupName);
-                mGroupDatabase.child("Groups").child(groupId).child("members").child(mCurrentUid).setValue(mCurrentUid).addOnCompleteListener(new OnCompleteListener<Void>() {
+                mUsersDatabase.child(mCurrentUid).child("groups").child(groupId).child("name").setValue(groupName);
+                mGroupDatabase.child("Groups").child(groupId).child("members").child(mCurrentUid).child("uid").setValue(mCurrentUid).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
 
@@ -93,13 +93,13 @@ public class GroupCreateActivity extends AppCompatActivity {
 
                 if (!set.isEmpty()){
                     for (final String uid: set){
-                        mGroupDatabase.child("Groups").child(groupId).child("members").child(uid).setValue(uid).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        mGroupDatabase.child("Groups").child(groupId).child("members").child(uid).child("uid").setValue(uid).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 Toast.makeText(GroupCreateActivity.this, uid, Toast.LENGTH_SHORT).show();
                             }
                         });
-                        mUsersDatabase.child(uid).child("Groups").child(groupId).setValue(groupName);
+                        mUsersDatabase.child(uid).child("groups").child(groupId).child("name").setValue(groupName);
                     }
                 }
                 backToMainActivity();

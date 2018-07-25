@@ -85,7 +85,7 @@ public class ContactGroupFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-//        startListening();
+        startListening();
     }
 
     public void startListening() {
@@ -93,7 +93,7 @@ public class ContactGroupFragment extends Fragment {
                 .getReference()
                 .child("Users")
                 .child(mCurrentUid)
-                .child("Groups")
+                .child("groups")
                 .limitToLast(50);
 
         FirebaseRecyclerOptions<GroupStruct> options =
@@ -108,9 +108,9 @@ public class ContactGroupFragment extends Fragment {
 //                holder.setThumbImage(model.thumb_image, getApplicationContext());
 
                 final String groupid = getRef(position).getKey();
-                Toast.makeText(getContext(), groupid, Toast.LENGTH_LONG).show();
+//                Toast.makeText(getContext(), groupid, Toast.LENGTH_LONG).show();
 
-/*                mGroupDatabase.child(groupid).addValueEventListener(new ValueEventListener() {
+                mGroupDatabase.child(groupid).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String userName = dataSnapshot.child("name").getValue().toString();
@@ -125,7 +125,7 @@ public class ContactGroupFragment extends Fragment {
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
-                });*/
+                });
 
 
             }
@@ -157,13 +157,13 @@ public class ContactGroupFragment extends Fragment {
         }
 
         public void setName(String name){
-            TextView userNameView = mView.findViewById(R.id.name_contacts_all);
+            TextView userNameView = mView.findViewById(R.id.group_name);
             userNameView.setText(name);
 
         }
 
         public void setThumbImage(String thumbImage, Context context){
-            CircularImageView userImageView = mView.findViewById(R.id.profile_pic_contacts);
+            CircularImageView userImageView = mView.findViewById(R.id.group_pic);
             Picasso.get().load(thumbImage).placeholder(R.drawable.default_user).into(userImageView);
         }
 

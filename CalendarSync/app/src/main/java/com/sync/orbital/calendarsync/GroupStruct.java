@@ -6,6 +6,10 @@ public class GroupStruct {
     String thumb_image;
     String size;
 
+    public GroupStruct() {
+
+    }
+
     public String getName() {
         return name;
     }
