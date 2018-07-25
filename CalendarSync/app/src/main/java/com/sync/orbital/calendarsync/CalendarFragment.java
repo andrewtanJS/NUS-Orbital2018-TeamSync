@@ -117,6 +117,8 @@ public class CalendarFragment extends Fragment
         calendarView.setEmptyViewLongPressListener(this);
         setHasOptionsMenu(true);
 
+        calendarView.setShowNowLine(true);
+
         ((MainActivity)getActivity()).setTitle("Calendar");
 
         return view;
