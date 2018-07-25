@@ -7,9 +7,21 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorWhiteTransparent">#80ffffff</color>
     <color name="colorBlack">#000000</color>
-    <color name="eventColor1">#9932CC</color>
-    <color name="eventColor2">#e0c24b</color>
-    <color name="eventColor3">#ad2680</color>
-    <color name="eventColor4">#de8a7a</color>
-    <color name="eventColor5">#c7cc49</color>
+    <color name="eventColor1">#623A79</color>
+    <color name="eventColor2">#AF4AC4</color>
+    <color name="eventColor3">#4973AD</color>
+    <color name="eventColor4">#2AAAC5</color>
+    <color name="eventColor5">#49D2B8</color>
+
+    <color name="nicole1">#900C3E</color>
+    <color name="nicole2">#27335D</color>
+    <color name="nicole3">#FFC300</color>
+    <color name="nicole4">#D35400</color>
+    <color name="nicole5">#2E4D2E</color>
+
+    <color name="bright1">#00B1BF</color>
+    <color name="bright2">#0085B6</color>
+    <color name="bright3">#00D49D</color>
+    <color name="bright4">#FEDF03</color>
+    <color name="bright5">#FF005D</color>
 </resources>

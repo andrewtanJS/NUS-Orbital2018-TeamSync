@@ -33,7 +33,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        if (!((CalendarSyncApplication) this.getApplication()).isPersistent()) {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            ((CalendarSyncApplication) this.getApplication()).setPersistent(true);
+        }
 
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);

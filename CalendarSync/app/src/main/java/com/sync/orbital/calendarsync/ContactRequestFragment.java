@@ -92,13 +92,12 @@ public class ContactRequestFragment extends Fragment {
             protected void onBindViewHolder(@NonNull final FriendsReqViewHolder holder, int position, @NonNull ContactsAllStruct model) {
 //                holder.setName(model.name);
 //                holder.setThumbImage(model.thumb_image, getApplicationContext());
-
                 final String userid = getRef(position).getKey();
 
                 mUsersDatabase.child(userid).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String userName = dataSnapshot.child("name").getValue().toString();
+                        String userName  = dataSnapshot.child("name").getValue().toString();
                         String userThumb = dataSnapshot.child("thumb_image").getValue().toString();
 
                         holder.setName(userName);
