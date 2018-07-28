@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EventInfoActivity">
+
+    <include
+        android:id="@+id/event_info_toolbar"
+        layout="@layout/toolbar" />
+
+    <TextView
+        android:id="@+id/event_info_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="78dp"
+        android:text="Event Name"
+        android:textSize="24sp"
+        android:textColor="@color/colorBlack"/>
+
+    <TextView
+        android:id="@+id/event_info_from"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/event_info_name"
+        android:layout_marginTop="121dp"
+        android:text="From"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/event_info_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/event_info_from"
+        android:layout_marginEnd="136dp"
+        android:text="To"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/event_info_start_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/event_info_name"
+        android:layout_below="@+id/event_info_start_time"
+        android:text="00/00/0000"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/event_info_start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/event_info_name"
+        android:layout_marginTop="153dp"
+        android:text="00:00"
+        android:textSize="24sp"
+        android:textColor="@color/colorPrimary"/>
+
+    <TextView
+        android:id="@+id/event_info_end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/event_info_start_date"
+        android:layout_alignStart="@+id/event_info_to"
+        android:text="00:00"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/event_info_end_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/event_info_to"
+        android:layout_alignTop="@+id/event_info_start_date"
+        android:text="00/00/0000"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/event_info_description_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/event_info_name"
+        android:layout_marginTop="227dp"
+        android:text="Description"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/event_info_description"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="22dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="257dp"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/event_info_attending"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/event_info_name"
+        android:layout_marginBottom="223dp"
+        android:text="Confirmed "
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/event_info_edit_btn"
+        android:layout_width="70dp"
+        android:layout_height="38dp"
+        android:layout_alignEnd="@+id/event_info_description"
+        android:layout_alignTop="@+id/event_info_name"
+        android:text="Edit" />
+
+    <Button
+        android:id="@+id/event_info_delete_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/event_info_name"
+        android:layout_alignEnd="@id/event_info_edit_btn"
+        android:layout_marginBottom="28dp"
+        android:text="Leave event"
+        android:textColor="@color/colorWhite"
+        android:backgroundTint="@color/colorAccent"/>
+
+
+</RelativeLayout>

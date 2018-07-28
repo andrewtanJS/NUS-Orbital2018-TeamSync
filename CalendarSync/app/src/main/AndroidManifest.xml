@@ -53,7 +53,9 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".ContactSearchActivity" />
         <activity android:name=".GroupCreateActivity" />
-        <activity android:name=".GroupInfoActivity"></activity>
+        <activity android:name=".GroupInfoActivity" />
+        <activity android:name=".EventInfoActivity" />
+        <activity android:name=".EventEditActivity"></activity>
     </application>
 
 </manifest>

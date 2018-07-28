@@ -145,6 +145,9 @@ public class EventRequestFragment extends Fragment {
                                         Toast.makeText(getContext(), "Decline", Toast.LENGTH_SHORT).show();
                                     }
                                 });
+
+
+
                             }
                         });
 
