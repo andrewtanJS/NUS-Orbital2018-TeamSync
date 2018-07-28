@@ -30,7 +30,6 @@ public class GroupInfoActivity extends AppCompatActivity {
     private ProgressDialog mProgressDialog;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -75,9 +75,8 @@ public class EventIncomingFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference eventsRef = reference.child("users")
-                                                .child(user.getUid())
-                                                .child("events");
+        DatabaseReference eventsRef = reference.child("users").child(user.getUid()).child("events");
+
         eventsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

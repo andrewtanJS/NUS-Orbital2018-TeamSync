@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.nfc.Tag;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -90,7 +91,8 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
         switch (item.getId()) {
             case R.id.action_create_event:
                 if (sT && sD && eT && eD) {
-                    addEvent();
+//                    addEvent();
+                    addEventGroup();
                     backToEventActivity();
                 } else {
                     Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_LONG).show();
@@ -213,7 +215,7 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void addEventGroup(){
-        String eventName = mEventNameField.getText().toString().trim();
+        final String eventName = mEventNameField.getText().toString().trim();
 
         String startDateStr = String.format(Locale.US, "%02d/%02d/%04d",
                 startDay,
@@ -230,8 +232,14 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
                 endHour,
                 endMinute);
 
-        DatabaseReference mEventsDatabase = FirebaseDatabase.getInstance().getReference().child("Events");
-        DatabaseReference mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(group_id).child("members");
+        //Get Firebase user
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final String currentUid = user.getUid();
+
+        final DatabaseReference mEventsDatabase = FirebaseDatabase.getInstance().getReference().child("Events");
+        final DatabaseReference mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(group_id).child("members");
+        final DatabaseReference mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        final DatabaseReference mEventReqDatabase = FirebaseDatabase.getInstance().getReference().child("Event_req");
 
         //Event object to store information
 
@@ -240,15 +248,22 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
                         startDateStr, startTimeStr,
                         endDateStr, endTimeStr);
 
-        String eventId = mEventsDatabase.push().getKey();
+        final String eventId = mEventsDatabase.push().getKey();
         mEventsDatabase.child(eventId).setValue(eventNew);
+        mEventsDatabase.child(eventId).child("members").child(currentUid).child("uid").setValue(currentUid);
+        mUsersDatabase.child(currentUid).child("events").child(eventId).child("name").setValue(eventName);
 
         mGroupDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String user_id = snapshot.child("uid").getValue().toString();
-                    Log.d("uid", user_id);
+//                    mEventsDatabase.child(eventId).child("members").child(user_id).child("uid").setValue(user_id);
+//                    mUsersDatabase.child(user_id).child("events").child(eventId).child("name").setValue(eventName);
+                    if (!user_id.equals(currentUid)){
+                        mEventReqDatabase.child(user_id).child(eventId).child("sent_by").setValue(currentUid);
+                    }
+
                 }
             }
 
