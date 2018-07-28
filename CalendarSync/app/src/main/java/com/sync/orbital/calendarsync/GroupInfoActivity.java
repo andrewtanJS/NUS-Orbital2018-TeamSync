@@ -1,9 +1,12 @@
 package com.sync.orbital.calendarsync;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,11 +22,13 @@ public class GroupInfoActivity extends AppCompatActivity {
     private ImageView mGroupImage;
     private TextView mGroupName;
     private Button mGroupCreateButton;
+    private Toolbar mToolbar;
 
     private DatabaseReference mGroupDatabase;
     private DatabaseReference mUsersDatabase;
 
     private ProgressDialog mProgressDialog;
+
 
 
     @Override
@@ -35,6 +40,10 @@ public class GroupInfoActivity extends AppCompatActivity {
 
         mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
         mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(group_id);
+
+        mToolbar = (Toolbar) findViewById(R.id.group_info_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Groups");
 
         mGroupImage = (ImageView) findViewById(R.id.group_create_pic);
         mGroupName = (TextView) findViewById(R.id.group_info_name);
@@ -61,6 +70,14 @@ public class GroupInfoActivity extends AppCompatActivity {
             }
         });
 
+        mGroupCreateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_grp_create = new Intent(GroupInfoActivity.this, CreateActivity.class);
+                intent_grp_create.putExtra("group_id", group_id);
+                startActivity(intent_grp_create);
+            }
+        });
 
 
 

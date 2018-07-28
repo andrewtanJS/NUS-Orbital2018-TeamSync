@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.nfc.Tag;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -17,8 +18,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -37,6 +41,8 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
     private boolean sD, sT, eD, eT;
     Button buttonCreate, btnStartDate, btnEndDate, btnStartTime, btnEndTime;
 
+    private String group_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +53,9 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
         toolbar.setTitle("Create Activity");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        //Get group_id
+        group_id = getIntent().getStringExtra("group_id");
 
         btnStartDate = findViewById(R.id.btn_date_start);
         btnStartTime = findViewById(R.id.btn_time_start);
@@ -202,6 +211,56 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
 
         Toast.makeText(this, "Event added", Toast.LENGTH_LONG).show();
     }
+
+    private void addEventGroup(){
+        String eventName = mEventNameField.getText().toString().trim();
+
+        String startDateStr = String.format(Locale.US, "%02d/%02d/%04d",
+                startDay,
+                startMonth,
+                startYear);
+        String startTimeStr = String.format(Locale.US, "%02d:%02d",
+                startHour,
+                startMinute);
+        String endDateStr = String.format(Locale.US, "%02d/%02d/%04d",
+                endDay,
+                endMonth,
+                endYear);
+        String endTimeStr = String.format(Locale.US, "%02d:%02d",
+                endHour,
+                endMinute);
+
+        DatabaseReference mEventsDatabase = FirebaseDatabase.getInstance().getReference().child("Events");
+        DatabaseReference mGroupDatabase = FirebaseDatabase.getInstance().getReference().child("Groups").child(group_id).child("members");
+
+        //Event object to store information
+
+        EventIncomingStruct eventNew =
+                new EventIncomingStruct(eventName, "Going", "0/0",
+                        startDateStr, startTimeStr,
+                        endDateStr, endTimeStr);
+
+        String eventId = mEventsDatabase.push().getKey();
+        mEventsDatabase.child(eventId).setValue(eventNew);
+
+        mGroupDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String user_id = snapshot.child("uid").getValue().toString();
+                    Log.d("uid", user_id);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
 
     private void backToEventActivity(){
         Intent intent = new Intent(CreateActivity.this, MainActivity.class);
