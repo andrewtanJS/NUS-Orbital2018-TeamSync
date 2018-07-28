@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class GroupCreateActivity extends AppCompatActivity {
 
     private EditText mGroupName;
     private Button mCreateBtn;
+    private ImageButton mImageButton;
 
     private Toolbar mToolbar;
     private RecyclerView mFriendsList;
@@ -48,6 +50,7 @@ public class GroupCreateActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private String mCurrentUid;
+    private static final int PIC_PICK = 1;
 
     private HashSet<String> set =new HashSet<String>();
 
@@ -103,6 +106,17 @@ public class GroupCreateActivity extends AppCompatActivity {
                     }
                 }
                 backToMainActivity();
+            }
+        });
+
+        mImageButton = (ImageButton) findViewById(R.id.group_create_pic);
+        mImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pic_intent = new Intent();
+                pic_intent.setType("image/*");
+                pic_intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(pic_intent, "Select Image"), PIC_PICK);
             }
         });
 

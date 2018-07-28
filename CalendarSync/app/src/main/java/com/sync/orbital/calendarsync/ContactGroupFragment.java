@@ -44,6 +44,8 @@ public class ContactGroupFragment extends Fragment {
 
     private String mCurrentUid;
 
+
+
     public ContactGroupFragment() {
         // Required empty public constructor
     }
@@ -118,6 +120,15 @@ public class ContactGroupFragment extends Fragment {
 
                         holder.setName(userName);
                     //    holder.setThumbImage(userThumb, getContext());
+
+                        holder.mView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent_grp = new Intent(getContext(), GroupInfoActivity.class);
+                                intent_grp.putExtra("group_id", groupid);
+                                startActivity(intent_grp);
+                            }
+                        });
 
                     }
 

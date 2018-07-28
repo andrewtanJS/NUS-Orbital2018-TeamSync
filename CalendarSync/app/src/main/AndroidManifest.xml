@@ -12,8 +12,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:allowBackup="true"
         android:name=".CalendarSyncApplication"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_sync"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -52,7 +52,8 @@
             android:label="@string/title_activity_google_sign_in"
             android:theme="@style/AppTheme" />
         <activity android:name=".ContactSearchActivity" />
-        <activity android:name=".GroupCreateActivity"></activity>
+        <activity android:name=".GroupCreateActivity" />
+        <activity android:name=".GroupInfoActivity"></activity>
     </application>
 
 </manifest>
