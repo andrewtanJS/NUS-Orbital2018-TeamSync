@@ -15,9 +15,8 @@
             android:id="@+id/event_req_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/event_req_start_time"
-            android:layout_alignParentTop="true"
             android:layout_marginTop="12dp"
+            android:layout_marginStart="15dp"
             android:text="Event Name"
             android:textColor="@color/colorBlack"
             android:textSize="20sp" />
