@@ -7,6 +7,7 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorWhiteTransparent">#80ffffff</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorLightGrey">#D3D3D3</color>
     <color name="eventColor1">#623A79</color>
     <color name="eventColor2">#AF4AC4</color>
     <color name="eventColor3">#4973AD</color>

@@ -55,7 +55,8 @@
         <activity android:name=".GroupCreateActivity" />
         <activity android:name=".GroupInfoActivity" />
         <activity android:name=".EventInfoActivity" />
-        <activity android:name=".EventEditActivity"></activity>
+        <activity android:name=".EventEditActivity" />
+        <activity android:name=".CreateGroupActivity"></activity>
     </application>
 
 </manifest>

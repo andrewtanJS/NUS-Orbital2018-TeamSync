@@ -91,8 +91,7 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
         switch (item.getId()) {
             case R.id.action_create_event:
                 if (sT && sD && eT && eD) {
-//                    addEvent();
-                    addEventGroup();
+                    addEvent();
                     backToEventActivity();
                 } else {
                     Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_LONG).show();

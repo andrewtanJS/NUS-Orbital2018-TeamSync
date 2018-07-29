@@ -99,7 +99,7 @@ public class GroupCreateActivity extends AppCompatActivity {
                         mGroupDatabase.child("Groups").child(groupId).child("members").child(uid).child("uid").setValue(uid).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(GroupCreateActivity.this, uid, Toast.LENGTH_SHORT).show();
+
                             }
                         });
                         mUsersDatabase.child(uid).child("groups").child(groupId).child("name").setValue(groupName);
@@ -227,6 +227,8 @@ public class GroupCreateActivity extends AppCompatActivity {
 
 
     }
+
+
 
     private void backToMainActivity(){
         Intent intent = new Intent(GroupCreateActivity.this, MainActivity.class);
