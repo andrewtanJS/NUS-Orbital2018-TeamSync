@@ -72,7 +72,7 @@ public class GroupInfoActivity extends AppCompatActivity {
         mGroupCreateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent_grp_create = new Intent(GroupInfoActivity.this, CreateActivity.class);
+                Intent intent_grp_create = new Intent(GroupInfoActivity.this, CreateGroupActivity.class);
                 intent_grp_create.putExtra("group_id", group_id);
                 startActivity(intent_grp_create);
             }

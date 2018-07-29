@@ -34,11 +34,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class CreateActivity extends AppCompatActivity implements View.OnClickListener{
+public class CreateGroupActivity extends AppCompatActivity implements View.OnClickListener{
 
     private EditText mEventNameField, startDate, startTime, endDate, endTime;
     private int startYear, startMonth, startDay, startHour, startMinute,
-                endYear, endMonth, endDay, endHour, endMinute;
+            endYear, endMonth, endDay, endHour, endMinute;
     private boolean sD, sT, eD, eT;
     Button buttonCreate, btnStartDate, btnEndDate, btnStartTime, btnEndTime;
 
@@ -75,7 +75,7 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
 
         mEventNameField = findViewById(R.id.activity_name);
         buttonCreate = findViewById(R.id.action_create_event);
-        buttonCreate.setOnClickListener(CreateActivity.this);
+        buttonCreate.setOnClickListener(CreateGroupActivity.this);
 
     }
 
@@ -91,7 +91,8 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
         switch (item.getId()) {
             case R.id.action_create_event:
                 if (sT && sD && eT && eD) {
-                    addEvent();
+//                    addEvent();
+                    addEventGroup();
                     backToEventActivity();
                 } else {
                     Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_LONG).show();
@@ -181,19 +182,19 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
         String eventName = mEventNameField.getText().toString().trim();
 
         String startDateStr = String.format(Locale.US, "%02d/%02d/%04d",
-                                    startDay,
-                                    startMonth,
-                                    startYear);
+                startDay,
+                startMonth,
+                startYear);
         String startTimeStr = String.format(Locale.US, "%02d:%02d",
-                                    startHour,
-                                    startMinute);
+                startHour,
+                startMinute);
         String endDateStr = String.format(Locale.US, "%02d/%02d/%04d",
-                                    endDay,
-                                    endMonth,
-                                    endYear);
+                endDay,
+                endMonth,
+                endYear);
         String endTimeStr = String.format(Locale.US, "%02d:%02d",
-                                    endHour,
-                                    endMinute);
+                endHour,
+                endMinute);
         //Get Firebase user
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         //Write message to database
@@ -277,7 +278,7 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
 
 
     private void backToEventActivity(){
-        Intent intent = new Intent(CreateActivity.this, MainActivity.class);
+        Intent intent = new Intent(CreateGroupActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }

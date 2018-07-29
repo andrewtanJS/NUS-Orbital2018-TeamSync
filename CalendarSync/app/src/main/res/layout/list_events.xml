@@ -17,13 +17,14 @@
             android:layout_width="wrap_content"
             android:orientation="vertical"
             android:gravity="start">
+
             <TextView
                 android:id="@+id/event_name"
-                android:layout_width="wrap_content"
+                android:layout_width="227dp"
                 android:layout_height="wrap_content"
                 android:text="Event 1"
-                android:textSize="23sp"
-                android:textColor="@color/colorBlack"/>
+                android:textColor="@color/colorBlack"
+                android:textSize="23sp" />
 
             <LinearLayout
                 android:layout_height="match_parent"
@@ -47,14 +48,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Attendees: "
+                    android:text=" "
                     android:textSize="13sp"/>
 
                 <TextView
                     android:id="@+id/event_attendees"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="23/37"
+                    android:text=""
                     android:textSize="13sp"/>
 
             </LinearLayout>
