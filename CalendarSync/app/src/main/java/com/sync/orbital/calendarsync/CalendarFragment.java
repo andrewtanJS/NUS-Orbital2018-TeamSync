@@ -89,7 +89,7 @@ public class CalendarFragment extends Fragment
         //Event info
         eventList = new ArrayList<>();
 
-        getFirebaseData(new EventsCallback(){
+        getFirebaseEventData(new EventsCallback(){
             @Override
             public void onCallBack(EventIncomingStruct event){
                 eventList.add(event);
@@ -243,29 +243,19 @@ public class CalendarFragment extends Fragment
         return true;
     }
 
-    private void getFirebaseData(final EventsCallback eventsCallback) {
+    private void getFirebaseEventUid(final EventsUidCallback eventsUidCallback) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference eventsRef = reference.child("users")
+        DatabaseReference eventsUidRef = reference.child("Users")
                 .child(user.getUid())
                 .child("events");
-        eventsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        eventsUidRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //Result will be holded Here
                 for (DataSnapshot dataSnap: dataSnapshot.getChildren()){
-                    String name = String.valueOf(dataSnap.child("name").getValue());
-                    String status = String.valueOf(dataSnap.child("status").getValue());
-                    String attendees = String.valueOf(dataSnap.child("attendees").getValue());
-                    String startDate =  String.valueOf(dataSnap.child("startDate").getValue());
-                    String startTime =  String.valueOf(dataSnap.child("startTime").getValue());
-                    String endDate =  String.valueOf(dataSnap.child("endDate").getValue());
-                    String endTime =  String.valueOf(dataSnap.child("endTime").getValue());
-                    EventIncomingStruct events =
-                            new EventIncomingStruct(name, status, attendees,
-                                    startDate, startTime, endDate, endTime);
-                    eventsCallback.onCallBack(events);
+                    eventsUidCallback.onCallBack(String.valueOf(dataSnap.getValue()));
                 }
             }
 
@@ -275,6 +265,45 @@ public class CalendarFragment extends Fragment
                 Log.w(TAG, "Failed to read value.", databaseError.toException());
             }
         });
+    }
+
+    private void getFirebaseEventData(final EventsCallback eventsCallback) {
+        getFirebaseEventUid(new EventsUidCallback(){
+            @Override
+            public void onCallBack(String eventUid){
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference eventsRef = reference.child("Events")
+                        .child(eventUid);
+                eventsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        //Result will be holded Here
+                        for (DataSnapshot dataSnap: dataSnapshot.getChildren()){
+                            String name = String.valueOf(dataSnap.child("name").getValue());
+                            String status = String.valueOf(dataSnap.child("status").getValue());
+                            String attendees = String.valueOf(dataSnap.child("attendees").getValue());
+                            String startDate =  String.valueOf(dataSnap.child("startDate").getValue());
+                            String startTime =  String.valueOf(dataSnap.child("startTime").getValue());
+                            String endDate =  String.valueOf(dataSnap.child("endDate").getValue());
+                            String endTime =  String.valueOf(dataSnap.child("endTime").getValue());
+                            EventIncomingStruct events =
+                                    new EventIncomingStruct(name, status, attendees,
+                                            startDate, startTime, endDate, endTime);
+                            eventsCallback.onCallBack(events);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        //Handle error
+                        Log.w(TAG, "Failed to read value.", databaseError.toException());
+                    }
+                });
+            }
+        });
+
+
+
     }
 
 

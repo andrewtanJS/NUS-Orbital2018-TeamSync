@@ -186,8 +186,6 @@ public class GoogleSignInActivity extends AppCompatActivity {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         // Build a new authorized API client service.
         try {
-            Toast.makeText(getApplicationContext(),
-                    "Syncing with Google Calendar", Toast.LENGTH_SHORT).show();
             final NetHttpTransport HTTP_TRANSPORT = new com.google.api.client.http.javanet.NetHttpTransport();
             com.google.api.services.calendar.Calendar service =
                     new com.google.api.services.calendar.Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
@@ -232,8 +230,10 @@ public class GoogleSignInActivity extends AppCompatActivity {
      */
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         // Load client secrets.
+        Log.d("GoogleCalendar", CLIENT_SECRET_DIR);
         InputStream in = CalendarFragment.class
                  .getResourceAsStream(CLIENT_SECRET_DIR);
+
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
         // Build flow and trigger user authorization request.
