@@ -78,12 +78,14 @@ public class EventIncomingFragment extends Fragment {
         DatabaseReference eventsUidRef = reference.child("Users")
                 .child(user.getUid())
                 .child("events");
+        Log.i("EventUid", "adding listener");
         eventsUidRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //Result will be holded Here
                 for (DataSnapshot dataSnap: dataSnapshot.getChildren()){
-                    eventsUidCallback.onCallBack(String.valueOf(dataSnap.getValue()));
+                    eventsUidCallback.onCallBack(dataSnap.getKey());
+                    Log.i("EventUid", dataSnap.getKey());
                 }
             }
 
@@ -106,19 +108,18 @@ public class EventIncomingFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         //Result will be holded Here
-                        for (DataSnapshot dataSnap: dataSnapshot.getChildren()){
-                            String name = String.valueOf(dataSnap.child("name").getValue());
-                            String status = String.valueOf(dataSnap.child("status").getValue());
-                            String attendees = String.valueOf(dataSnap.child("attendees").getValue());
-                            String startDate =  String.valueOf(dataSnap.child("startDate").getValue());
-                            String startTime =  String.valueOf(dataSnap.child("startTime").getValue());
-                            String endDate =  String.valueOf(dataSnap.child("endDate").getValue());
-                            String endTime =  String.valueOf(dataSnap.child("endTime").getValue());
-                            EventIncomingStruct events =
-                                    new EventIncomingStruct(name, status, attendees,
-                                            startDate, startTime, endDate, endTime);
-                            eventsCallback.onCallBack(events);
-                        }
+                        String name = String.valueOf(dataSnapshot.child("name").getValue());
+                        String status = String.valueOf(dataSnapshot.child("status").getValue());
+                        String attendees = String.valueOf(dataSnapshot.child("attendees").getValue());
+                        String startDate =  String.valueOf(dataSnapshot.child("startDate").getValue());
+                        String startTime =  String.valueOf(dataSnapshot.child("startTime").getValue());
+                        String endDate =  String.valueOf(dataSnapshot.child("endDate").getValue());
+                        String endTime =  String.valueOf(dataSnapshot.child("endTime").getValue());
+                        EventIncomingStruct events =
+                                new EventIncomingStruct(name, status, attendees,
+                                        startDate, startTime, endDate, endTime);
+                        eventsCallback.onCallBack(events);
+
                     }
 
                     @Override
