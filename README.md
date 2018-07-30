@@ -1,4 +1,4 @@
-# CalendarSync
+# CalendarSync :calendar:
 Repository for NUS Orbital 2018 - Team Sync
 
 
