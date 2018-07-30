@@ -40,7 +40,7 @@ public class EventFragment extends Fragment {
         setHasOptionsMenu(true);
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.AddFragment(new EventIncomingFragment(), "Incoming");
+        //adapter.AddFragment(new EventIncomingFragment(), "Incoming");
         adapter.AddFragment(new EventRequestFragment(), "Requests");
         adapter.AddFragment(new EventAllFragment(), "All");
         viewPager.setAdapter(adapter);
