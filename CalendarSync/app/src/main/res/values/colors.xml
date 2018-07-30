@@ -8,11 +8,11 @@
     <color name="colorWhiteTransparent">#80ffffff</color>
     <color name="colorBlack">#000000</color>
     <color name="colorLightGrey">#D3D3D3</color>
-    <color name="eventColor1">#623A79</color>
-    <color name="eventColor2">#AF4AC4</color>
-    <color name="eventColor3">#4973AD</color>
-    <color name="eventColor4">#2AAAC5</color>
-    <color name="eventColor5">#49D2B8</color>
+    <color name="eventColor1">#4F80EB</color>
+    <color name="eventColor2">#E1173B</color>
+    <color name="eventColor3">#F5C22B</color>
+    <color name="eventColor4">#25BE5A</color>
+    <color name="eventColor5">#4E81ED</color>
 
     <color name="nicole1">#900C3E</color>
     <color name="nicole2">#27335D</color>

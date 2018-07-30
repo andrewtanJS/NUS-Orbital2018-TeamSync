@@ -41,8 +41,8 @@ public class EventFragment extends Fragment {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         //adapter.AddFragment(new EventIncomingFragment(), "Incoming");
-        adapter.AddFragment(new EventRequestFragment(), "Requests");
         adapter.AddFragment(new EventAllFragment(), "All");
+        adapter.AddFragment(new EventRequestFragment(), "Requests");
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
