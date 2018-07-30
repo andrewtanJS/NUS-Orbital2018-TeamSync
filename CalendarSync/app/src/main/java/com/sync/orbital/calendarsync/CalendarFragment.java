@@ -89,6 +89,7 @@ public class CalendarFragment extends Fragment
         //Event info
         eventList = new ArrayList<>();
 
+        Log.i("Calendar", "getting firebase event data");
         getFirebaseEventData(new EventsCallback(){
             @Override
             public void onCallBack(EventIncomingStruct event){
@@ -146,6 +147,7 @@ public class CalendarFragment extends Fragment
             String[] strStDate = eventStartDate.split("/");
             String[] strEndTime = eventEndTime.split(":");
             String[] strEndDate = eventEndDate.split("/");
+            Log.i("Calendar", eventStartDate);
             if (Integer.parseInt(strStDate[2]) == newYear
                     && Integer.parseInt(strStDate[1]) == newMonth) {
                 WeekViewEvent wkEvent = new WeekViewEvent(id, event.getName(),
@@ -250,12 +252,14 @@ public class CalendarFragment extends Fragment
         DatabaseReference eventsUidRef = reference.child("Users")
                 .child(user.getUid())
                 .child("events");
+        Log.i("EventUid", "adding listener");
         eventsUidRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //Result will be holded Here
                 for (DataSnapshot dataSnap: dataSnapshot.getChildren()){
-                    eventsUidCallback.onCallBack(String.valueOf(dataSnap.getValue()));
+                    eventsUidCallback.onCallBack(dataSnap.getKey());
+                    Log.i("EventUid", dataSnap.getKey());
                 }
             }
 
@@ -278,19 +282,18 @@ public class CalendarFragment extends Fragment
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         //Result will be holded Here
-                        for (DataSnapshot dataSnap: dataSnapshot.getChildren()){
-                            String name = String.valueOf(dataSnap.child("name").getValue());
-                            String status = String.valueOf(dataSnap.child("status").getValue());
-                            String attendees = String.valueOf(dataSnap.child("attendees").getValue());
-                            String startDate =  String.valueOf(dataSnap.child("startDate").getValue());
-                            String startTime =  String.valueOf(dataSnap.child("startTime").getValue());
-                            String endDate =  String.valueOf(dataSnap.child("endDate").getValue());
-                            String endTime =  String.valueOf(dataSnap.child("endTime").getValue());
-                            EventIncomingStruct events =
-                                    new EventIncomingStruct(name, status, attendees,
-                                            startDate, startTime, endDate, endTime);
-                            eventsCallback.onCallBack(events);
-                        }
+                        String name = String.valueOf(dataSnapshot.child("name").getValue());
+                        String status = String.valueOf(dataSnapshot.child("status").getValue());
+                        String attendees = String.valueOf(dataSnapshot.child("attendees").getValue());
+                        String startDate =  String.valueOf(dataSnapshot.child("startDate").getValue());
+                        String startTime =  String.valueOf(dataSnapshot.child("startTime").getValue());
+                        String endDate =  String.valueOf(dataSnapshot.child("endDate").getValue());
+                        String endTime =  String.valueOf(dataSnapshot.child("endTime").getValue());
+                        EventIncomingStruct events =
+                                new EventIncomingStruct(name, status, attendees,
+                                        startDate, startTime, endDate, endTime);
+                        eventsCallback.onCallBack(events);
+
                     }
 
                     @Override
@@ -347,18 +350,18 @@ public class CalendarFragment extends Fragment
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(getActivity().getApplicationContext(), "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity().getApplicationContext(), event.getName(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(getActivity().getApplicationContext(), "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity().getApplicationContext(),  event.getName(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onEmptyViewLongPress(Calendar time) {
         Toast.makeText(getActivity().getApplicationContext(),
-                "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
+                getEventTitle(time), Toast.LENGTH_SHORT).show();
     }
 
     public WeekView getWeekView() {

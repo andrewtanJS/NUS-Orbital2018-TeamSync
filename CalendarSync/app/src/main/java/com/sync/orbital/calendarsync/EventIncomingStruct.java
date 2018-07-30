@@ -102,4 +102,16 @@ public class EventIncomingStruct {
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
+
+    @Override
+    public String toString() {
+        return "name: " + name +
+                "\nstatus: " + status +
+                "\nattendees: " + attendees +
+                "\nstart date: " + startDate +
+                "\nstart time: " + startTime +
+                "\nend date: " + endDate +
+                "\nend time: " + endTime;
+    }
+
 }
