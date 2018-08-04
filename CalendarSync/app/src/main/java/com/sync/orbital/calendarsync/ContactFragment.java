@@ -69,10 +69,10 @@ public class ContactFragment extends Fragment {
                 Intent intent_set = new Intent(getActivity(), ProfileActivity.class);
                 startActivity(intent_set);
                 return true;
-            case (R.id.action_all_users):
-                Intent intent_all = new Intent(getActivity(), UsersAllActivity.class);
-                startActivity(intent_all);
-                return true;
+//            case (R.id.action_all_users):
+//                Intent intent_all = new Intent(getActivity(), UsersAllActivity.class);
+//                startActivity(intent_all);
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

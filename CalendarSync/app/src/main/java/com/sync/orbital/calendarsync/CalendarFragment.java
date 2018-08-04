@@ -235,10 +235,10 @@ public class CalendarFragment extends Fragment
                     calendarView.notifyDatasetChanged();
                 }
                 break;
-            case R.id.action_settings_cal:
-                intent = new Intent(getActivity(), ProfileActivity.class);
-                startActivity(intent);
-                break;
+//            case R.id.action_settings_cal:
+//                intent = new Intent(getActivity(), ProfileActivity.class);
+//                startActivity(intent);
+//                break;
             default:
                 break;
         }

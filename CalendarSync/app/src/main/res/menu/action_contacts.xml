@@ -4,11 +4,11 @@
 
 
 
-    <item
-        android:id="@+id/action_all_users"
-        android:icon="@drawable/ic_people_black_24dp"
-        android:title="All Users"
-        app:showAsAction="ifRoom"/>
+    <!--<item-->
+        <!--android:id="@+id/action_all_users"-->
+        <!--android:icon="@drawable/ic_people_black_24dp"-->
+        <!--android:title="All Users"-->
+        <!--app:showAsAction="ifRoom"/>-->
 
     <item
         android:id="@+id/action_add_contacts"

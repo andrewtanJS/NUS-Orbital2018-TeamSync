@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <item
-        android:id="@+id/action_settings_cal"
-        android:icon="@drawable/ic_settings_24dp"
-        android:title="@string/action_settings"
-        app:showAsAction="ifRoom"/>
+    <!--<item-->
+        <!--android:id="@+id/action_settings_cal"-->
+        <!--android:icon="@drawable/ic_settings_24dp"-->
+        <!--android:title="@string/action_settings"-->
+        <!--app:showAsAction="ifRoom"/>-->
     <item
         android:id="@+id/ic_action_overflow"
         android:title="@string/options"

@@ -17,6 +17,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:elevation="6dp"
+        app:itemBackground="@drawable/line_btm"
         app:menu="@menu/nav_items">
     </android.support.design.widget.BottomNavigationView>
 

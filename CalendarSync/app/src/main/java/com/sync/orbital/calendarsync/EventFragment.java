@@ -62,10 +62,10 @@ public class EventFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-            case (R.id.action_add_events):
-                Intent intent_add = new Intent(getActivity(), CreateActivity.class);
-                startActivity(intent_add);
-                return true;
+//            case (R.id.action_add_events):
+//                Intent intent_add = new Intent(getActivity(), CreateActivity.class);
+//                startActivity(intent_add);
+//                return true;
             case (R.id.action_settings_events):
                 Intent intent_set = new Intent(getActivity(), ProfileActivity.class);
                 startActivity(intent_set);
