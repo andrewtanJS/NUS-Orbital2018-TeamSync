@@ -36,10 +36,11 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/group_create_friends_list"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
         android:layout_marginBottom="-82dp"
-        android:text="Friends List" />
+        android:text="Friends List"
+        android:textColor="@color/colorBlack"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/group_create_friends_list"
@@ -47,8 +48,10 @@
         android:layout_height="326dp"
         android:layout_alignBottom="@id/group_create_button"
         android:layout_alignTop="@id/group_create_name"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
         android:layout_marginBottom="60dp"
-        android:layout_marginTop="82dp">
+        android:layout_marginTop="87dp">
 
 
     </android.support.v7.widget.RecyclerView>

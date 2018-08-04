@@ -119,6 +119,7 @@ public class CalendarFragment extends Fragment
         setHasOptionsMenu(true);
 
         calendarView.setShowNowLine(true);
+        calendarView.setNowLineColor(R.color.colorPrimary);
 
         ((MainActivity)getActivity()).setTitle("Calendar");
 
