@@ -44,6 +44,8 @@ public class GroupInfoActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.group_info_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Groups");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         mGroupImage = (ImageView) findViewById(R.id.group_info_pic);
         mGroupName = (TextView) findViewById(R.id.group_info_name);
