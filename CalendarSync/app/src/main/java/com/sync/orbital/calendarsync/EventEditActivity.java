@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -26,10 +27,9 @@ import java.util.Locale;
 
 public class EventEditActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private EditText mEventName, startDate, startTime, endDate, endTime;
+    private TextView mEventName, startDate, startTime, endDate, endTime;
     private int startYear, startMonth, startDay, startHour, startMinute,
             endYear, endMonth, endDay, endHour, endMinute;
-    private boolean sD, sT, eD, eT;
     Button btnEdit, btnStartDate, btnEndDate, btnStartTime, btnEndTime;
 
     private String event_id;
@@ -38,9 +38,7 @@ public class EventEditActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_edit);
-
-        initialize();
+        setContentView(R.layout.activity_create);
 
         String event_name = getIntent().getStringExtra("event_name");
         String start_time = getIntent().getStringExtra("start_time");
@@ -49,24 +47,44 @@ public class EventEditActivity extends AppCompatActivity implements View.OnClick
         String end_date = getIntent().getStringExtra("end_date");
         event_id = getIntent().getStringExtra("event_id");
 
-        btnEdit = findViewById(R.id.action_edit_event);
+        btnEdit = findViewById(R.id.action_create_event);
 
-        mEventName = findViewById(R.id.activity_name_edit);
-        btnStartDate = findViewById(R.id.btn_date_start_edit);
-        btnStartTime = findViewById(R.id.btn_time_start_edit);
-        btnEndDate = findViewById(R.id.btn_date_end_edit);
-        btnEndTime = findViewById(R.id.btn_time_end_edit);
+        mEventName = findViewById(R.id.activity_name);
+        btnStartDate = findViewById(R.id.btn_date_start);
+        btnStartTime = findViewById(R.id.btn_time_start);
+        btnEndDate = findViewById(R.id.btn_date_end);
+        btnEndTime = findViewById(R.id.btn_time_end);
 
-        startDate = findViewById(R.id.start_date_edit);
-        startTime = findViewById(R.id.start_time_edit);
-        endDate = findViewById(R.id.end_date_edit);
-        endTime = findViewById(R.id.end_time_edit);
+        startDate = findViewById(R.id.start_date);
+        startTime = findViewById(R.id.start_time);
+        endDate = findViewById(R.id.end_date);
+        endTime = findViewById(R.id.end_time);
 
         mEventName.setText(event_name);
         startDate.setText(start_date);
         startTime.setText(start_time);
         endDate.setText(end_date);
         endTime.setText(end_time);
+
+        // Initializing all fields
+        String[] startTimeArr = start_time.split(":");
+        String[] startDateArr = start_date.split("/");
+        String[] endTimeArr = end_time.split(":");
+        String[] endDateArr = end_date.split("/");
+
+        startHour = Integer.parseInt(startTimeArr[0]);
+        startMinute = Integer.parseInt(startTimeArr[1]);
+        startYear = Integer.parseInt(startDateArr[0]);
+        startMonth = Integer.parseInt(startDateArr[1]);
+        startDay = Integer.parseInt(startDateArr[2]);
+
+        endHour = Integer.parseInt(endTimeArr[0]);
+        endMinute = Integer.parseInt(endTimeArr[1]);
+        endYear = Integer.parseInt(endDateArr[0]);
+        endMonth = Integer.parseInt(endDateArr[1]);
+        endDay = Integer.parseInt(endDateArr[2]);
+
+        
 
         btnEdit.setOnClickListener(this);
         btnStartDate.setOnClickListener(this);
@@ -80,15 +98,11 @@ public class EventEditActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View item) {
         Calendar now = Calendar.getInstance();
         switch (item.getId()) {
-            case R.id.action_edit_event:
-                if (sT && sD && eT && eD) {
-                    editEvent();
-                    backToEventActivity();
-                } else {
-                    Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_LONG).show();
-                }
+            case R.id.action_create_event:
+                editEvent();
+                backToEventActivity();
                 break;
-            case R.id.btn_date_start_edit:
+            case R.id.btn_date_start:
                 DatePickerDialog dateStartPickerDialog = new DatePickerDialog(this,
                         new DatePickerDialog.OnDateSetListener() {
 
@@ -97,7 +111,6 @@ public class EventEditActivity extends AppCompatActivity implements View.OnClick
                                                   int monthOfYear, int dayOfMonth) {
 
                                 startDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                                sD = true;
                                 startYear = year;
                                 startMonth = monthOfYear + 1;
                                 startDay = dayOfMonth;
@@ -108,7 +121,7 @@ public class EventEditActivity extends AppCompatActivity implements View.OnClick
                         now.get(Calendar.DATE));
                 dateStartPickerDialog.show();
                 break;
-            case R.id.btn_time_start_edit:
+            case R.id.btn_time_start:
                 TimePickerDialog timeStartPickerDialog = new TimePickerDialog(this,
                         new TimePickerDialog.OnTimeSetListener() {
 
@@ -120,14 +133,13 @@ public class EventEditActivity extends AppCompatActivity implements View.OnClick
                                 } else {
                                     startTime.setText(hourOfDay + ":" + minute);
                                 }
-                                sT = true;
                                 startHour = hourOfDay;
                                 startMinute = minute;
                             }
                         }, startHour, startMinute, false);
                 timeStartPickerDialog.show();
                 break;
-            case R.id.btn_date_end_edit:
+            case R.id.btn_date_end:
                 DatePickerDialog dateEndPickerDialog = new DatePickerDialog(this,
                         new DatePickerDialog.OnDateSetListener() {
 
@@ -136,7 +148,6 @@ public class EventEditActivity extends AppCompatActivity implements View.OnClick
                                                   int monthOfYear, int dayOfMonth) {
 
                                 endDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                                eD = true;
                                 endYear = year;
                                 endMonth = monthOfYear + 1;
                                 endDay = dayOfMonth;
@@ -144,7 +155,7 @@ public class EventEditActivity extends AppCompatActivity implements View.OnClick
                         }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DATE));
                 dateEndPickerDialog.show();
                 break;
-            case R.id.btn_time_end_edit:
+            case R.id.btn_time_end:
                 TimePickerDialog timeEndPickerDialog = new TimePickerDialog(this,
                         new TimePickerDialog.OnTimeSetListener() {
 
@@ -156,7 +167,6 @@ public class EventEditActivity extends AppCompatActivity implements View.OnClick
                                 } else {
                                     endTime.setText(hourOfDay + ":" + minute);
                                 }
-                                eT = true;
                                 endHour = hourOfDay;
                                 endMinute = minute;
                             }
@@ -166,11 +176,6 @@ public class EventEditActivity extends AppCompatActivity implements View.OnClick
             default:
                 break;
         }
-    }
-
-    private void initialize(){
-        sD = sT = eD = eT = true;
-
     }
 
     private void editEvent(){
