@@ -85,7 +85,7 @@ public class GroupCreateActivity extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.group_create_toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("All Users");
+        getSupportActionBar().setTitle("Create Group");
 
 
         mAuth = FirebaseAuth.getInstance();

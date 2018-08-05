@@ -37,12 +37,17 @@ public class UsersProfileActivity extends AppCompatActivity {
     private DatabaseReference mUsersDatabase;
     private DatabaseReference mFriendRequestDatabase;
     private DatabaseReference mFriendDatabase;
+    private DatabaseReference mMyDatabase;
+    private FirebaseAuth mAuth;
 
     private FirebaseUser mCurrentUser;
 
     private ProgressDialog mProgressDialog;
 
     private int mCurrentState;
+
+    private String name;
+    private String my_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +56,12 @@ public class UsersProfileActivity extends AppCompatActivity {
 
         final String user_id = getIntent().getStringExtra("user_id");
 
+
         mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
         mFriendRequestDatabase = FirebaseDatabase.getInstance().getReference().child("Friend_req");
         mFriendDatabase = FirebaseDatabase.getInstance().getReference().child("Friends");
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+        mMyDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
 
 
         mProfilePic = (CircularImageView) findViewById(R.id.users_profile_pic);
@@ -70,11 +77,24 @@ public class UsersProfileActivity extends AppCompatActivity {
         mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.show();
 
+        //Get my name
+        mMyDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                my_name = dataSnapshot.child("name").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
         mUsersDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String name = dataSnapshot.child("name").getValue().toString();
+                name = dataSnapshot.child("name").getValue().toString();
                 String image = dataSnapshot.child("image").getValue().toString();
                 String status = dataSnapshot.child("status").getValue().toString();
 
@@ -205,6 +225,9 @@ public class UsersProfileActivity extends AppCompatActivity {
                 else if (mCurrentState==2){
                     final String currentDate = DateFormat.getDateTimeInstance().format(new Date());
 
+
+
+
                     mFriendDatabase.child(mCurrentUser.getUid()).child(user_id).child("date")
                             .setValue(currentDate).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -238,6 +261,40 @@ public class UsersProfileActivity extends AppCompatActivity {
                             });
                         }
                     });
+
+//                    mFriendDatabase.child(mCurrentUser.getUid()).child(user_id).child("name")
+//                            .setValue(name).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                        @Override
+//                        public void onSuccess(Void aVoid) {
+//                            mFriendDatabase.child(user_id).child(mCurrentUser.getUid()).child("name")
+//                                    .setValue(my_name).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                @Override
+//                                public void onSuccess(Void aVoid) {
+//                                    //Add Friend on Opposite Side
+//                                    mFriendRequestDatabase.child(mCurrentUser.getUid()).child(user_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                        @Override
+//                                        public void onSuccess(Void aVoid) {
+//                                            //Delete Friend Request
+//                                            mFriendRequestDatabase.child(user_id).child(mCurrentUser.getUid()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                                @Override
+//                                                public void onSuccess(Void aVoid) {
+//                                                    mSendReqBtn.setEnabled(true);
+//                                                    mCurrentState = 3; //friends
+//                                                    mSendReqBtn.setText("Unfriend this Contact");
+//
+//                                                    mDeclineBtn.setVisibility(View.INVISIBLE);
+//                                                    mDeclineBtn.setEnabled(false);
+//
+//
+//                                                }
+//                                            });
+//                                        }
+//                                    });
+//
+//                                }
+//                            });
+//                        }
+//                    });
                 }
 
                 //Unfriend

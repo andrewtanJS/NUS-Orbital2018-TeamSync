@@ -14,8 +14,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="52dp"
         android:src="@drawable/default_user"
-        app:civ_border_color="@color/colorPrimary"
-        app:civ_border_width="2dp" />
+ />
 
     <TextView
         android:id="@+id/users_name"
@@ -40,11 +39,11 @@
 
     <Button
         android:id="@+id/users_req_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="182dp"
+        android:layout_marginBottom="136dp"
         android:backgroundTint="@color/colorAccent"
         android:text="Send Friend Request"
         android:textColor="@color/colorWhite" />
@@ -52,12 +51,11 @@
 
     <Button
         android:id="@+id/users_decline_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="111dp"
-        android:backgroundTint="@color/colorAccent"
+        android:layout_marginBottom="72dp"
         android:text="Decline Friend Request"
         android:textColor="@color/colorWhite" />
 
