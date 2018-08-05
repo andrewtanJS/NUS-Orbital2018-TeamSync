@@ -3,13 +3,16 @@ package com.sync.orbital.calendarsync;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.EventLog;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -31,6 +34,8 @@ public class EventInfoActivity extends AppCompatActivity {
     private Button mEditBtn;
     private Button mDeleteBtn;
 
+    private Toolbar mToolbar;
+
     private DatabaseReference mUsersDatabase;
     private DatabaseReference mEventsDatabase;
 
@@ -43,6 +48,12 @@ public class EventInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_info);
+
+        mToolbar = (Toolbar) findViewById(R.id.event_info_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Event Info");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -130,6 +141,14 @@ public class EventInfoActivity extends AppCompatActivity {
             }
         });
     }
+//    @Override
+//    public void onBackPressed() {
+//        if (getFragmentManager().getBackStackEntryCount() > 0) {
+//            getFragmentManager().popBackStack();
+//        } else {
+//            super.onBackPressed();
+//        }
+//    }
 
     private void backToEventActivity(){
         Intent intent = new Intent(EventInfoActivity.this, MainActivity.class);

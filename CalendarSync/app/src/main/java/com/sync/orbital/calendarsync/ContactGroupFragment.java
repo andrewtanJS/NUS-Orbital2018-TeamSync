@@ -116,10 +116,10 @@ public class ContactGroupFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String userName = dataSnapshot.child("name").getValue().toString();
-                    //    String userThumb = dataSnapshot.child("thumb_image").getValue().toString();
+                        String userThumb = dataSnapshot.child("thumb_image").getValue().toString();
 
                         holder.setName(userName);
-                    //    holder.setThumbImage(userThumb, getContext());
+                        holder.setThumbImage(userThumb, getContext());
 
                         holder.mView.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -175,7 +175,7 @@ public class ContactGroupFragment extends Fragment {
 
         public void setThumbImage(String thumbImage, Context context){
             CircularImageView userImageView = mView.findViewById(R.id.group_pic);
-            Picasso.get().load(thumbImage).placeholder(R.drawable.default_user).into(userImageView);
+            Picasso.get().load(thumbImage).placeholder(R.drawable.default_group_icon).into(userImageView);
         }
 
 
