@@ -52,14 +52,18 @@
         <activity
             android:name=".GoogleSignInActivity"
             android:label="@string/title_activity_google_sign_in"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".StartActivity" />
+            android:parentActivityName=".StartActivity"
+            android:theme="@style/AppTheme" />
         <activity android:name=".ContactSearchActivity" />
         <activity android:name=".GroupCreateActivity" />
         <activity android:name=".GroupInfoActivity" />
         <activity android:name=".EventInfoActivity" />
         <activity android:name=".EventEditActivity" />
-        <activity android:name=".CreateGroupActivity"></activity>
+        <activity android:name=".CreateGroupActivity" />
+        <activity
+            android:name=".CalendarPreferencesActivity"
+            android:label="@string/title_activity_preferences"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

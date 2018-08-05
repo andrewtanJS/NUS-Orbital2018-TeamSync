@@ -29,6 +29,9 @@
                 app:showAsAction="ifRoom"
                 android:title="@string/weekview" />
 
+            <item android:id="@+id/activity_preferences"
+                app:showAsAction="ifRoom"
+                android:title="Calendar Preferences" />
 
         </menu>
 
