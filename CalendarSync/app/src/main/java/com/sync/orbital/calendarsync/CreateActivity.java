@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -36,7 +37,7 @@ import java.util.Locale;
 
 public class CreateActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private EditText mEventNameField, startDate, startTime, endDate, endTime;
+    private TextView mEventNameField, startDate, startTime, endDate, endTime;
     private int startYear, startMonth, startDay, startHour, startMinute,
                 endYear, endMonth, endDay, endHour, endMinute;
     private boolean sD, sT, eD, eT;

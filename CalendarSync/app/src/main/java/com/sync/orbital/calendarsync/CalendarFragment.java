@@ -19,6 +19,7 @@ import com.google.api.services.calendar.model.Events;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.RectF;
+import android.preference.PreferenceActivity;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -236,10 +237,10 @@ public class CalendarFragment extends Fragment
                     calendarView.notifyDatasetChanged();
                 }
                 break;
-//            case R.id.action_settings_cal:
-//                intent = new Intent(getActivity(), ProfileActivity.class);
-//                startActivity(intent);
-//                break;
+            case R.id.activity_preferences:
+                intent = new Intent(getActivity(), CalendarPreferencesActivity.class);
+                startActivity(intent);
+                break;
             default:
                 break;
         }

@@ -28,6 +28,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -85,6 +86,12 @@ public class GoogleSignInActivity extends AppCompatActivity {
 
         mGoogleSignInBtn = findViewById(R.id.signin_google_btn);
         mUsernameField = findViewById(R.id.signin_username);
+
+        Toolbar toolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Google Sign in");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         mGoogleSignInBtn.setOnClickListener(new View.OnClickListener() {
             @Override

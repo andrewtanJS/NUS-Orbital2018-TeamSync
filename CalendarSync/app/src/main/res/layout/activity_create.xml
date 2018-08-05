@@ -51,12 +51,12 @@
                     android:layout_height="wrap_content"
                     android:text="Start Date and Time" />
 
-                <EditText
+                <TextView
                     android:id="@+id/start_date"
                     android:layout_width="200dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_alignParentStart="true"
-                    android:layout_alignTop="@+id/btn_date_start" />
+                    android:layout_centerVertical="true" />
 
                 <Button
                     android:id="@+id/btn_date_start"
@@ -66,10 +66,10 @@
                     android:layout_alignParentEnd="true"
                     android:text="SELECT DATE" />
 
-                <EditText
+                <TextView
                     android:id="@+id/start_time"
                     android:layout_width="200dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentStart="true" />
 
@@ -93,10 +93,10 @@
                     android:layout_height="wrap_content"
                     android:text="End Date and Time" />
 
-                <EditText
+                <TextView
                     android:id="@+id/end_date"
                     android:layout_width="200dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true" />
 
@@ -104,14 +104,14 @@
                     android:id="@+id/btn_date_end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_above="@+id/end_time"
                     android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     android:text="SELECT DATE" />
 
-                <EditText
+                <TextView
                     android:id="@+id/end_time"
                     android:layout_width="200dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentStart="true" />
 
