@@ -104,14 +104,33 @@
         android:textSize="16sp" />
 
     <TextView
+        android:id="@+id/event_info_location_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/event_info_name"
+        android:layout_below="@+id/event_info_description"
+        android:text="Location"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/event_info_location"
+        android:layout_width="341dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/event_info_attending"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="35dp"
+        android:textSize="16sp" />
+
+    <TextView
         android:id="@+id/event_info_attending"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/event_info_name"
-        android:layout_marginBottom="223dp"
+        android:layout_marginBottom="166dp"
         android:text="Confirmed "
         android:textSize="16sp" />
+
 
     <Button
         android:id="@+id/event_info_edit_btn"

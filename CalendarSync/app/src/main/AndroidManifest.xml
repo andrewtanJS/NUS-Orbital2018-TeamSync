@@ -57,7 +57,9 @@
         <activity android:name=".ContactSearchActivity" />
         <activity android:name=".GroupCreateActivity" />
         <activity android:name=".GroupInfoActivity" />
-        <activity android:name=".EventInfoActivity" />
+        <activity
+            android:name=".EventInfoActivity"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".EventEditActivity" />
         <activity android:name=".CreateGroupActivity" />
         <activity

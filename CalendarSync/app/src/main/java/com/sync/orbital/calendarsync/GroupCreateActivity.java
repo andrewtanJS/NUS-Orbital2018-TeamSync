@@ -1,7 +1,10 @@
 package com.sync.orbital.calendarsync;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -29,11 +33,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+
+import id.zelory.compressor.Compressor;
 
 public class GroupCreateActivity extends AppCompatActivity {
 
@@ -47,12 +61,22 @@ public class GroupCreateActivity extends AppCompatActivity {
     private DatabaseReference mUsersDatabase;
     private DatabaseReference mGroupDatabase;
 
+    //Storage Firebase
+    private StorageReference mStorageRef;
+
     private FirebaseAuth mAuth;
+
+    private ProgressDialog mDialog;
 
     private String mCurrentUid;
     private static final int PIC_PICK = 1;
 
     private HashSet<String> set =new HashSet<String>();
+
+    //For group picture
+    private Uri resultUri;
+    private byte[] thumb_byte;
+    private boolean hasPicture = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +94,8 @@ public class GroupCreateActivity extends AppCompatActivity {
         mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
         mGroupDatabase = FirebaseDatabase.getInstance().getReference();
 
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+
         mFriendsList = (RecyclerView) findViewById(R.id.group_create_friends_list);
         mFriendsList.setHasFixedSize(true);
         mFriendsList.setLayoutManager(new LinearLayoutManager(this));
@@ -79,7 +105,15 @@ public class GroupCreateActivity extends AppCompatActivity {
         mCreateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String groupId = mGroupDatabase.push().getKey();
+
+
+                mDialog = new ProgressDialog(GroupCreateActivity.this);
+                mDialog.setTitle("Creating...");
+                mDialog.setCanceledOnTouchOutside(false);
+                mDialog.show();
+
+
+                final String groupId = mGroupDatabase.push().getKey();
                 String groupName = mGroupName.getText().toString();
                 mGroupDatabase.child("Groups").child(groupId).child("name").setValue(groupName).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -104,8 +138,94 @@ public class GroupCreateActivity extends AppCompatActivity {
                         });
                         mUsersDatabase.child(uid).child("groups").child(groupId).child("name").setValue(groupName);
                     }
+
+                    int groupSize = set.size() + 1;
+
+                    mGroupDatabase.child("Groups").child(groupId).child("size").setValue(groupSize);
+
                 }
-                backToMainActivity();
+
+                //Upload picture to firebase
+
+                mGroupDatabase.child("Groups").child(groupId).child("image").setValue("default");
+                mGroupDatabase.child("Groups").child(groupId).child("thumb_image").setValue("default");
+
+                if (hasPicture) {
+                    StorageReference filepath = mStorageRef.child("group_pictures").child(groupId + ".jpg");
+                    final StorageReference thumbFilepath = mStorageRef.child("group_pictures").child("thumbs").child(groupId + ".jpg");
+
+                    filepath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+
+                            if (task.isSuccessful()) {
+                                mStorageRef.child("group_pictures").child(groupId + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+
+                                        final String downloadUrl = uri.toString();
+
+                                        UploadTask uploadTask = thumbFilepath.putBytes(thumb_byte);
+                                        uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> thumb_task) {
+                                                if (thumb_task.isSuccessful()) {
+                                                    mStorageRef.child("group_pictures").child("thumbs").child(groupId + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                        @Override
+                                                        public void onSuccess(Uri thumb_uri) {
+                                                            final String thumbDownloadUrl = thumb_uri.toString();
+                                                            mGroupDatabase.child("Groups").child(groupId).child("image").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                    if (task.isSuccessful()){
+                                                                        mGroupDatabase.child("Groups").child(groupId).child("thumb_image").setValue(thumbDownloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                            @Override
+                                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                                if (task.isSuccessful()){
+                                                                                    mDialog.dismiss();
+                                                                                    Toast.makeText(getApplicationContext(), "Successful.", Toast.LENGTH_LONG).show();
+                                                                                    backToMainActivity();
+                                                                                }
+                                                                            }
+                                                                        });
+                                                                    }
+                                                                }
+                                                            });
+
+                                                        }
+                                                    });
+                                                }
+
+                                            }
+                                        });
+
+                                    }
+                                });
+
+
+                            } else {
+                                mDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "Error.", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+                }
+                else {
+                    mGroupDatabase.child("Groups").child(groupId).child("image").setValue("default").addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            mGroupDatabase.child("Groups").child(groupId).child("thumb_image").setValue("default").addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    mDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), "Successful.", Toast.LENGTH_LONG).show();
+                                    backToMainActivity();
+                                }
+                            });
+                        }
+                    });
+
+                }
             }
         });
 
@@ -226,6 +346,58 @@ public class GroupCreateActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PIC_PICK && resultCode == RESULT_OK) {
+
+            Uri imageUri = data.getData();
+            CropImage.activity(imageUri)
+                    .setAspectRatio(1, 1)
+                    .start(this);
+
+        }
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
+            if (resultCode == RESULT_OK) {
+
+                mDialog = new ProgressDialog(GroupCreateActivity.this);
+                mDialog.setTitle("Cropping...");
+                mDialog.setCanceledOnTouchOutside(false);
+                mDialog.show();
+
+                resultUri = result.getUri();
+
+                File thumb_filePath = new File(resultUri.getPath());
+
+
+                Bitmap thumb_bitmap = new Compressor(this)
+                        .setMaxHeight(200)
+                        .setMaxWidth(200)
+                        .setQuality(75)
+                        .compressToBitmap(thumb_filePath);
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                thumb_byte = baos.toByteArray();
+
+                hasPicture = true;
+
+                mImageButton.setImageResource(R.drawable.ic_group_green_24dp);
+
+                Toast.makeText(getApplicationContext(),"Image Chosen", Toast.LENGTH_LONG).show();
+                mDialog.dismiss();
+
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
+        }
     }
 
 

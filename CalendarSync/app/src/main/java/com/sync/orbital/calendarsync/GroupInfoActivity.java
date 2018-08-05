@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class GroupInfoActivity extends AppCompatActivity {
 
@@ -44,7 +45,7 @@ public class GroupInfoActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Groups");
 
-        mGroupImage = (ImageView) findViewById(R.id.group_create_pic);
+        mGroupImage = (ImageView) findViewById(R.id.group_info_pic);
         mGroupName = (TextView) findViewById(R.id.group_info_name);
         mGroupCreateButton = (Button) findViewById(R.id.group_info_create_button);
 
@@ -57,8 +58,12 @@ public class GroupInfoActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.child("name").getValue().toString();
+                String image = dataSnapshot.child("image").getValue().toString();
 
                 mGroupName.setText(name);
+                if(!image.equals("default")) {
+                    Picasso.get().load(image).into(mGroupImage);
+                }
 
                 mProgressDialog.dismiss();
             }
