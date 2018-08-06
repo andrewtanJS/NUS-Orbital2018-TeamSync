@@ -107,7 +107,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
 
-                                startDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                startDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                                 sD = true;
                                 startYear = year;
                                 startMonth = monthOfYear + 1;
@@ -146,7 +146,7 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
 
-                                endDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                endDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                                 eD = true;
                                 endYear = year;
                                 endMonth = monthOfYear + 1;
