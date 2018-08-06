@@ -1,13 +1,18 @@
 package com.sync.orbital.calendarsync;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -19,6 +24,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
@@ -36,6 +42,7 @@ public class EventChatActivity extends AppCompatActivity {
     private ImageButton mSendButton;
     private EditText mMessageText;
     private RecyclerView mMessageList;
+    private SwipeRefreshLayout mRefreshLayout;
 
     private Toolbar mToolbar;
 
@@ -51,6 +58,8 @@ public class EventChatActivity extends AppCompatActivity {
     private final List<Message> messagesList = new ArrayList<>();
     private LinearLayoutManager mLinearLayout;
     private MessageAdapter mAdapter;
+
+    private static final int ITEMS_TO_LOAD = 30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +113,7 @@ public class EventChatActivity extends AppCompatActivity {
         mMessageText = (EditText) findViewById(R.id.event_message_text);
         mSendButton = (ImageButton) findViewById(R.id.event_message_send_btn);
         mMessageList = (RecyclerView) findViewById(R.id.event_message_list);
+        mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.event_chat_swipe);
         mLinearLayout = new LinearLayoutManager(this);
 
         mAdapter = new MessageAdapter(messagesList);
@@ -138,10 +148,23 @@ public class EventChatActivity extends AppCompatActivity {
 
             }
         });
+
+//        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                mCurrentPage++;
+//                loadMoreMessages();
+//            }
+//        });
     }
 
+
+
     private void loadMessages() {
-        mRootDatabase.child("Chats_events").child(mEventId).child("messages").addChildEventListener(new ChildEventListener() {
+
+        Query messageQuery = mRootDatabase.child("Chats_events").child(mEventId).child("messages").limitToLast(ITEMS_TO_LOAD);
+
+        messageQuery.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
@@ -151,6 +174,8 @@ public class EventChatActivity extends AppCompatActivity {
                 mAdapter.notifyDataSetChanged();
 
                 mMessageList.scrollToPosition(messagesList.size()-1);
+
+                mRefreshLayout.setRefreshing(false);
 
             }
 
@@ -176,6 +201,29 @@ public class EventChatActivity extends AppCompatActivity {
         });
 
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_chat, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case (R.id.action_event_info):
+                Intent intent_event = new Intent(this, EventInfoActivity.class);
+                intent_event.putExtra("event_id", mEventId);
+                startActivity(intent_event);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
 
 
 }

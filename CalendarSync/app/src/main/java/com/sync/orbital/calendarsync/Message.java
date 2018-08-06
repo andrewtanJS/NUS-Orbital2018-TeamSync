@@ -6,6 +6,7 @@ public class Message {
     private String messageUser;
     private String messageUserId;
     private String messageTime;
+    private String messageImage;
 
     public Message(String messageText, String messageUser, String messageUserId, String messageTime) {
         this.messageText = messageText;
