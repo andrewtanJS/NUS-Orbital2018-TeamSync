@@ -38,7 +38,7 @@ public class EventEditActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create);
+        setContentView(R.layout.activity_edit);
 
         String event_name = getIntent().getStringExtra("event_name");
         String start_time = getIntent().getStringExtra("start_time");
@@ -74,17 +74,17 @@ public class EventEditActivity extends AppCompatActivity implements View.OnClick
 
         startHour = Integer.parseInt(startTimeArr[0]);
         startMinute = Integer.parseInt(startTimeArr[1]);
-        startYear = Integer.parseInt(startDateArr[0]);
+        startYear = Integer.parseInt(startDateArr[2]);
         startMonth = Integer.parseInt(startDateArr[1]);
-        startDay = Integer.parseInt(startDateArr[2]);
+        startDay = Integer.parseInt(startDateArr[0]);
 
         endHour = Integer.parseInt(endTimeArr[0]);
         endMinute = Integer.parseInt(endTimeArr[1]);
-        endYear = Integer.parseInt(endDateArr[0]);
+        endYear = Integer.parseInt(endDateArr[2]);
         endMonth = Integer.parseInt(endDateArr[1]);
-        endDay = Integer.parseInt(endDateArr[2]);
+        endDay = Integer.parseInt(endDateArr[0]);
 
-        
+
 
         btnEdit.setOnClickListener(this);
         btnStartDate.setOnClickListener(this);
@@ -110,7 +110,7 @@ public class EventEditActivity extends AppCompatActivity implements View.OnClick
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
 
-                                startDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                startDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                                 startYear = year;
                                 startMonth = monthOfYear + 1;
                                 startDay = dayOfMonth;
@@ -147,7 +147,7 @@ public class EventEditActivity extends AppCompatActivity implements View.OnClick
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
 
-                                endDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                endDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                                 endYear = year;
                                 endMonth = monthOfYear + 1;
                                 endDay = dayOfMonth;

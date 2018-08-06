@@ -33,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if(((CalendarSyncApplication) this.getApplication())
+                .getCalendarTheme() == null) {
+            ((CalendarSyncApplication) this.getApplication())
+                    .setCalendarTheme(CalendarSyncApplication.CALENDAR_THEME.MATERIAL);
+        }
+
         if (!((CalendarSyncApplication) this.getApplication()).isPersistent()) {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             ((CalendarSyncApplication) this.getApplication()).setPersistent(true);
