@@ -92,7 +92,6 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         switch (item.getId()) {
             case R.id.action_create_event:
                 if (sT && sD && eT && eD) {
-//                    addEvent();
                     addEventGroup();
                     backToEventActivity();
                 } else {

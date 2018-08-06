@@ -8,21 +8,32 @@
     <color name="colorWhiteTransparent">#80ffffff</color>
     <color name="colorBlack">#000000</color>
     <color name="colorLightGrey">#D3D3D3</color>
-    <color name="eventColor1">#4F80EB</color>
-    <color name="eventColor2">#E1173B</color>
-    <color name="eventColor3">#F5C22B</color>
-    <color name="eventColor4">#25BE5A</color>
-    <color name="eventColor5">#4E81ED</color>
 
-    <color name="nicole1">#900C3E</color>
-    <color name="nicole2">#27335D</color>
-    <color name="nicole3">#FFC300</color>
-    <color name="nicole4">#D35400</color>
-    <color name="nicole5">#2E4D2E</color>
+
+    // Calendar Themes
+    <color name="material1">#4F80EB</color>
+    <color name="material2">#E1173B</color>
+    <color name="material3">#F5C22B</color>
+    <color name="material4">#25BE5A</color>
+    <color name="material5">#4E81ED</color>
 
     <color name="bright1">#00B1BF</color>
     <color name="bright2">#0085B6</color>
     <color name="bright3">#00D49D</color>
     <color name="bright4">#FEDF03</color>
     <color name="bright5">#FF005D</color>
+
+    <color name="gradient1">#9100FF</color>
+    <color name="gradient2">#7200F3</color>
+    <color name="gradient3">#6600C6</color>
+    <color name="gradient4">#53009F</color>
+    <color name="gradient5">#3B017D</color>
+
+    <color name="pastel1">#FFB3BA</color>
+    <color name="pastel2">#FFDFBA</color>
+    <color name="pastel3">#FFFFBA</color>
+    <color name="pastel4">#BAFFC9</color>
+    <color name="pastel5">#BAE1FF</color>
+    **/
+
 </resources>

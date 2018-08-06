@@ -130,14 +130,7 @@ public class CalendarFragment extends Fragment
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
         // The list of events in the week view
-        int[] colors =
-                {
-                        getResources().getColor(R.color.eventColor1),
-                        getResources().getColor(R.color.eventColor2),
-                        getResources().getColor(R.color.eventColor3),
-                        getResources().getColor(R.color.eventColor4),
-                        getResources().getColor(R.color.eventColor5),
-                };
+        int[] colors = this.getColors(((CalendarSyncApplication) this.getActivity().getApplication()).getCalendarTheme());
         List<WeekViewEvent> events = new ArrayList<>();
         int id = 0;
         for(EventIncomingStruct event: eventList) {
@@ -348,6 +341,51 @@ public class CalendarFragment extends Fragment
                 time.get(Calendar.MINUTE),
                 time.get(Calendar.MONTH)+1,
                 time.get(Calendar.DAY_OF_MONTH));
+    }
+
+    private int[] getColors(CalendarSyncApplication.CALENDAR_THEME theme) {
+        switch(theme) {
+            case MATERIAL:
+                int[] material =
+                        {
+                                getResources().getColor(R.color.material1),
+                                getResources().getColor(R.color.material2),
+                                getResources().getColor(R.color.material3),
+                                getResources().getColor(R.color.material4),
+                                getResources().getColor(R.color.material5),
+                        };
+                return material;
+            case BRIGHT:
+                int[] bright =
+                        {
+                                getResources().getColor(R.color.bright1),
+                                getResources().getColor(R.color.bright2),
+                                getResources().getColor(R.color.bright3),
+                                getResources().getColor(R.color.bright4),
+                                getResources().getColor(R.color.bright5),
+                        };
+                return bright;
+            case PASTEL:
+                int[] pastel =
+                        {
+                                getResources().getColor(R.color.pastel1),
+                                getResources().getColor(R.color.pastel2),
+                                getResources().getColor(R.color.pastel3),
+                                getResources().getColor(R.color.pastel4),
+                                getResources().getColor(R.color.pastel5),
+                        };
+                return pastel;
+            default:
+                int[] gradient =
+                        {
+                                getResources().getColor(R.color.gradient1),
+                                getResources().getColor(R.color.gradient2),
+                                getResources().getColor(R.color.gradient3),
+                                getResources().getColor(R.color.gradient4),
+                                getResources().getColor(R.color.gradient5),
+                        };
+                return gradient;
+        }
     }
 
     @Override
