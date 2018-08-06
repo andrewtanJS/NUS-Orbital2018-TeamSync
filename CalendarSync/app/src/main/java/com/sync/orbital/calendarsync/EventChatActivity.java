@@ -150,6 +150,8 @@ public class EventChatActivity extends AppCompatActivity {
                 messagesList.add(message);
                 mAdapter.notifyDataSetChanged();
 
+                mMessageList.scrollToPosition(messagesList.size()-1);
+
             }
 
             @Override
