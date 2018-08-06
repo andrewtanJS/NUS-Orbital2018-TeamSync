@@ -97,7 +97,7 @@ public class EventAllFragment extends Fragment {
                 mEventsDatabase.child(eventid).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String eventName = dataSnapshot.child("name").getValue().toString();
+                        final String eventName = dataSnapshot.child("name").getValue().toString();
                         String startTime = dataSnapshot.child("startTime").getValue().toString();
                         String startDate = dataSnapshot.child("startDate").getValue().toString();
 //                        String endTime = dataSnapshot.child("endTime").getValue().toString();
@@ -113,8 +113,10 @@ public class EventAllFragment extends Fragment {
                         holder.mView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent_event = new Intent(getContext(), EventInfoActivity.class);
+//                                Intent intent_event = new Intent(getContext(), EventInfoActivity.class);
+                                Intent intent_event = new Intent(getContext(), EventChatActivity.class);
                                 intent_event.putExtra("event_id", eventid);
+                                intent_event.putExtra("event_name", eventName);
                                 startActivity(intent_event);
                             }
                         });
@@ -129,6 +131,7 @@ public class EventAllFragment extends Fragment {
 
 
             }
+
 
             @NonNull
             @Override

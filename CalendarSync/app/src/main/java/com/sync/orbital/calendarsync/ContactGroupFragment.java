@@ -115,7 +115,7 @@ public class ContactGroupFragment extends Fragment {
                 mGroupDatabase.child(groupid).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String userName = dataSnapshot.child("name").getValue().toString();
+                        final String userName = dataSnapshot.child("name").getValue().toString();
                         String userThumb = dataSnapshot.child("thumb_image").getValue().toString();
 
                         holder.setName(userName);
@@ -125,7 +125,9 @@ public class ContactGroupFragment extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 Intent intent_grp = new Intent(getContext(), GroupInfoActivity.class);
+//                                Intent intent_grp = new Intent(getContext(), GroupChatActivity.class);
                                 intent_grp.putExtra("group_id", groupid);
+                                intent_grp.putExtra("group_name", userName);
                                 startActivity(intent_grp);
                             }
                         });

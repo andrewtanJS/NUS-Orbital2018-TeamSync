@@ -59,13 +59,15 @@
         <activity android:name=".GroupInfoActivity" />
         <activity
             android:name=".EventInfoActivity"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".EventEditActivity" />
         <activity android:name=".CreateGroupActivity" />
         <activity
             android:name=".CalendarPreferencesActivity"
             android:label="@string/title_activity_preferences"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".GroupChatActivity" />
+        <activity android:name=".EventChatActivity"></activity>
     </application>
 
 </manifest>
