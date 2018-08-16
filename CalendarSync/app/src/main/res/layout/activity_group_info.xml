@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     tools:context=".GroupInfoActivity">
 
     <include
@@ -31,6 +32,32 @@
         android:text="TextView"
         android:textSize="20sp"
         android:textColor="@color/colorBlack"/>
+
+    <TextView
+        android:id="@+id/group_info_member_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="180dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginEnd="27dp"
+        android:text="Members"
+        android:textColor="@color/colorBlack"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/group_info_member_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/group_info_member_text"
+        android:layout_above="@id/group_info_create_button"
+        android:layout_marginEnd="27dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+
+    </android.support.v7.widget.RecyclerView>
 
     <Button
         android:id="@+id/group_info_create_button"
