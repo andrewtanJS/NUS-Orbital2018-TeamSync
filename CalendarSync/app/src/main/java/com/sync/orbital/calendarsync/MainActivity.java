@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,20 +57,25 @@ public class MainActivity extends AppCompatActivity {
         myRef.setValue("Hello, World!");
         eventFragment = new EventFragment();
         contactFragment = new ContactFragment();
-        calendarFragment = new CalendarFragment();;
+        calendarFragment = new CalendarFragment();
 
         myMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
-
                     case R.id.nav_cal :
+                        ((CalendarSyncApplication) getApplication())
+                                .setCurrentFragment(calendarFragment);
                         setFragment(calendarFragment);
                         return true;
                     case R.id.nav_event :
+                        ((CalendarSyncApplication) getApplication())
+                                .setCurrentFragment(eventFragment);
                         setFragment(eventFragment);
                         return true;
                     case R.id.nav_cont :
+                        ((CalendarSyncApplication) getApplication())
+                                .setCurrentFragment(contactFragment);
                         setFragment(contactFragment);
                         return true;
                     default:
@@ -103,6 +109,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        if (((CalendarSyncApplication) getApplication())
+                .getCurrentFragment() != null) {
+            setFragment(((CalendarSyncApplication) getApplication())
+                    .getCurrentFragment());
+        }
     }
 
 //    @Override
