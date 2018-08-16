@@ -6,6 +6,12 @@
         android:summary="Choose Calendar Theme"
         android:defaultValue="@string/pref_default_calendar_color"
         android:entries="@array/calendar_themes"
-        android:entryValues="@array/calendar_themes"
-        />
+        android:entryValues="@array/calendar_themes" />
+    <ListPreference
+        android:key="calendar_width"
+        android:title="Calendar Width"
+        android:summary="Choose Calendar Width"
+        android:defaultValue="@string/pref_default_calendar_width"
+        android:entries="@array/calendar_width"
+        android:entryValues="@array/calendar_size" />
 </PreferenceScreen>

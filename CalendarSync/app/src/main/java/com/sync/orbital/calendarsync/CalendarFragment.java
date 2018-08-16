@@ -53,6 +53,7 @@ public class CalendarFragment extends Fragment
     int calendarViewType = TYPE_THREE_DAY_VIEW;
     private ArrayList<EventIncomingStruct> eventList;
     String defaultCalendarTheme, calendarTheme;
+    int defaultCalendarWidth, calendarWidth;
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -77,6 +78,9 @@ public class CalendarFragment extends Fragment
 
         // Get a reference for the week view in the layout.
         calendarView = view.findViewById(R.id.weekView);
+
+        // Getting preferences
+        setPreferences();
 
         // refreshes the view
         calendarView.notifyDatasetChanged();
@@ -109,15 +113,29 @@ public class CalendarFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
+        setPreferences();
+        calendarView.notifyDatasetChanged();
+    }
+
+    private void setPreferences() {
         SharedPreferences preferences = PreferenceManager
                 .getDefaultSharedPreferences(this.getActivity());
         defaultCalendarTheme = getActivity().getResources()
                 .getString(R.string.pref_default_calendar_color);
         calendarTheme = preferences.getString("calendar_color",
                 defaultCalendarTheme);
-        calendarView.notifyDatasetChanged();
+        defaultCalendarWidth = Integer.parseInt(getActivity().getResources()
+                .getString(R.string.pref_default_calendar_width));
+        calendarWidth = Integer.parseInt(preferences
+                .getString("calendar_width",
+                        String.valueOf(defaultCalendarWidth)));
+        calendarView.setNumberOfVisibleDays(calendarWidth);
+        if(calendarWidth > 3) {
+            calendarView.setDayNameLength(WeekView.LENGTH_SHORT);
+        } else {
+            calendarView.setDayNameLength(WeekView.LENGTH_LONG);
+        }
     }
-
 
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
@@ -180,48 +198,6 @@ public class CalendarFragment extends Fragment
         Intent intent;
 
         switch (item.getItemId()) {
-            case R.id.day_view:
-                if (calendarViewType != TYPE_DAY_VIEW) {
-                    item.setChecked(!item.isChecked());
-                    calendarView.setNumberOfVisibleDays(1);
-                    calendarViewType = TYPE_DAY_VIEW;
-                    // Lets change some dimensions to best fit the view.
-                    calendarView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
-                    calendarView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
-                    calendarView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
-                    calendarView.setDayNameLength(WeekView.LENGTH_LONG);
-                    // refreshes the view
-                    calendarView.notifyDatasetChanged();
-                }
-                break;
-            case R.id.three_day_view:
-                if (calendarViewType != TYPE_THREE_DAY_VIEW) {
-                    item.setChecked(!item.isChecked());
-                    calendarView.setNumberOfVisibleDays(3);
-                    calendarViewType = TYPE_THREE_DAY_VIEW;
-                    // Lets change some dimensions to best fit the view.
-                    calendarView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
-                    calendarView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
-                    calendarView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
-                    calendarView.setDayNameLength(WeekView.LENGTH_LONG);
-                    // refreshes the view
-                    calendarView.notifyDatasetChanged();
-                }
-                break;
-            case R.id.week_view:
-                if (calendarViewType != TYPE_WEEK_VIEW) {
-                    item.setChecked(!item.isChecked());
-                    calendarView.setNumberOfVisibleDays(7);
-                    calendarViewType = TYPE_WEEK_VIEW;
-                    // Lets change some dimensions to best fit the view.
-                    calendarView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
-                    calendarView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
-                    calendarView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
-                    calendarView.setDayNameLength(WeekView.LENGTH_SHORT);
-                    // refreshes the view
-                    calendarView.notifyDatasetChanged();
-                }
-                break;
             case R.id.activity_preferences:
                 intent = new Intent(getActivity(), CalendarSettingsActivity.class);
                 startActivity(intent);

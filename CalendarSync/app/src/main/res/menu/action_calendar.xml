@@ -16,23 +16,9 @@
         android:icon="@drawable/ic_action_overflow">
 
         <menu>
-
-            <item android:id="@+id/day_view"
-                app:showAsAction="ifRoom"
-                android:title="@string/dayview" />
-
-            <item android:id="@+id/three_day_view"
-                app:showAsAction="ifRoom"
-                android:title="@string/threedayview" />
-
-            <item android:id="@+id/week_view"
-                app:showAsAction="ifRoom"
-                android:title="@string/weekview" />
-
             <item android:id="@+id/activity_preferences"
                 app:showAsAction="ifRoom"
                 android:title="Calendar Preferences" />
-
         </menu>
 
     </item>

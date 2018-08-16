@@ -146,4 +146,16 @@
         <item>GRADIENT</item>
     </string-array>
 
+    <string name="pref_default_calendar_width">3</string>
+    <string-array name="calendar_width">
+        <item>Day View</item>
+        <item>3 Day View</item>
+        <item>Week View</item>
+    </string-array>
+    <string-array name="calendar_size">
+        <item>1</item>
+        <item>3</item>
+        <item>7</item>
+    </string-array>
+
 </resources>
