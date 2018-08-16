@@ -27,9 +27,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" />
-        <activity
             android:name=".CreateActivity"
             android:label="@string/title_activity_create"
             android:theme="@style/AppTheme" />
@@ -63,7 +60,7 @@
         <activity android:name=".EventEditActivity" />
         <activity android:name=".CreateGroupActivity" />
         <activity
-            android:name=".CalendarPreferencesActivity"
+            android:name=".CalendarSettingsActivity"
             android:label="@string/title_activity_preferences"
             android:theme="@style/AppTheme" />
         <activity android:name=".GroupChatActivity" />

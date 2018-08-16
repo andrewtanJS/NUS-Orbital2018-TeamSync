@@ -1,6 +1,9 @@
 package com.sync.orbital.calendarsync;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -10,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,12 +36,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        if(((CalendarSyncApplication) this.getApplication())
-                .getCalendarTheme() == null) {
-            ((CalendarSyncApplication) this.getApplication())
-                    .setCalendarTheme(CalendarSyncApplication.CALENDAR_THEME.MATERIAL);
-        }
 
         if (!((CalendarSyncApplication) this.getApplication()).isPersistent()) {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
@@ -101,6 +99,10 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
         fragmentTransaction.commit();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
 //    @Override

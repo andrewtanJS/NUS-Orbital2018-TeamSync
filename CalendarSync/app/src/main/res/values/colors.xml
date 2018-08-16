@@ -11,6 +11,35 @@
 
 
     // Calendar Themes
+    <array name="material">
+        <item>@color/material1</item>
+        <item>@color/material2</item>
+        <item>@color/material3</item>
+        <item>@color/material4</item>
+        <item>@color/material5</item>
+    </array>
+    <array name="bright">
+        <item>@color/bright1</item>
+        <item>@color/bright2</item>
+        <item>@color/bright3</item>
+        <item>@color/bright4</item>
+        <item>@color/bright5</item>
+    </array>
+    <array name="pastel">
+        <item>@color/pastel1</item>
+        <item>@color/pastel2</item>
+        <item>@color/pastel3</item>
+        <item>@color/pastel4</item>
+        <item>@color/pastel5</item>
+    </array>
+    <array name="gradient">
+        <item>@color/gradient1</item>
+        <item>@color/gradient2</item>
+        <item>@color/gradient3</item>
+        <item>@color/gradient4</item>
+        <item>@color/gradient5</item>
+    </array>
+
     <color name="material1">#4F80EB</color>
     <color name="material2">#E1173B</color>
     <color name="material3">#F5C22B</color>

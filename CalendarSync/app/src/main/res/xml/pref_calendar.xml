@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:key="calendar_color"
+        android:title="Calendar Colors"
+        android:summary="Choose Calendar Theme"
+        android:defaultValue="@string/pref_default_calendar_color"
+        android:entries="@array/calendar_themes"
+        android:entryValues="@array/calendar_themes"
+        />
+</PreferenceScreen>

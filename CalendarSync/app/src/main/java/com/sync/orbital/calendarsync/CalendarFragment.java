@@ -1,31 +1,14 @@
 package com.sync.orbital.calendarsync;
 
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.DateTime;
-import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.calendar.CalendarScopes;
-import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.Events;
-
 
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.SharedPreferences;
 import android.graphics.RectF;
-import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -34,7 +17,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 import android.widget.Toast;
 
 import com.alamkanak.weekview.DateTimeInterpreter;
@@ -52,15 +34,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.security.GeneralSecurityException;
-import java.util.Collections;
-import java.util.List;
 
 import static android.support.constraint.Constraints.TAG;
 
@@ -77,6 +52,7 @@ public class CalendarFragment extends Fragment
     static final int TYPE_WEEK_VIEW = 3;
     int calendarViewType = TYPE_THREE_DAY_VIEW;
     private ArrayList<EventIncomingStruct> eventList;
+    String defaultCalendarTheme, calendarTheme;
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -122,15 +98,31 @@ public class CalendarFragment extends Fragment
         calendarView.setShowNowLine(true);
         calendarView.setNowLineColor(R.color.colorPrimary);
 
+        defaultCalendarTheme = getActivity().getResources()
+                .getString(R.string.pref_default_calendar_color);
+
         ((MainActivity)getActivity()).setTitle("Calendar");
 
         return view;
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        SharedPreferences preferences = PreferenceManager
+                .getDefaultSharedPreferences(this.getActivity());
+        defaultCalendarTheme = getActivity().getResources()
+                .getString(R.string.pref_default_calendar_color);
+        calendarTheme = preferences.getString("calendar_color",
+                defaultCalendarTheme);
+        calendarView.notifyDatasetChanged();
+    }
+
+
+    @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
         // The list of events in the week view
-        int[] colors = this.getColors(((CalendarSyncApplication) this.getActivity().getApplication()).getCalendarTheme());
+        int[] colors = this.getColors(calendarTheme);
         List<WeekViewEvent> events = new ArrayList<>();
         int id = 0;
         for(EventIncomingStruct event: eventList) {
@@ -231,7 +223,7 @@ public class CalendarFragment extends Fragment
                 }
                 break;
             case R.id.activity_preferences:
-                intent = new Intent(getActivity(), CalendarPreferencesActivity.class);
+                intent = new Intent(getActivity(), CalendarSettingsActivity.class);
                 startActivity(intent);
                 break;
             default:
@@ -343,48 +335,16 @@ public class CalendarFragment extends Fragment
                 time.get(Calendar.DAY_OF_MONTH));
     }
 
-    private int[] getColors(CalendarSyncApplication.CALENDAR_THEME theme) {
+    private int[] getColors(String theme) {
         switch(theme) {
-            case MATERIAL:
-                int[] material =
-                        {
-                                getResources().getColor(R.color.material1),
-                                getResources().getColor(R.color.material2),
-                                getResources().getColor(R.color.material3),
-                                getResources().getColor(R.color.material4),
-                                getResources().getColor(R.color.material5),
-                        };
-                return material;
-            case BRIGHT:
-                int[] bright =
-                        {
-                                getResources().getColor(R.color.bright1),
-                                getResources().getColor(R.color.bright2),
-                                getResources().getColor(R.color.bright3),
-                                getResources().getColor(R.color.bright4),
-                                getResources().getColor(R.color.bright5),
-                        };
-                return bright;
-            case PASTEL:
-                int[] pastel =
-                        {
-                                getResources().getColor(R.color.pastel1),
-                                getResources().getColor(R.color.pastel2),
-                                getResources().getColor(R.color.pastel3),
-                                getResources().getColor(R.color.pastel4),
-                                getResources().getColor(R.color.pastel5),
-                        };
-                return pastel;
+            case "MATERIAL":
+                return getResources().getIntArray(R.array.material);
+            case "BRIGHT":
+                return getResources().getIntArray(R.array.bright);
+            case "PASTEL":
+                return getResources().getIntArray(R.array.pastel);
             default:
-                int[] gradient =
-                        {
-                                getResources().getColor(R.color.gradient1),
-                                getResources().getColor(R.color.gradient2),
-                                getResources().getColor(R.color.gradient3),
-                                getResources().getColor(R.color.gradient4),
-                                getResources().getColor(R.color.gradient5),
-                        };
-                return gradient;
+                return getResources().getIntArray(R.array.gradient);
         }
     }
 

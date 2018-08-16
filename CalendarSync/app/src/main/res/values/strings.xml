@@ -138,4 +138,12 @@
     <string name="title_activity_google_sign_in">GoogleSignInActivity</string>
     <string name="title_activity_preferences">Preferences</string>
 
+    <string name="pref_default_calendar_color">MATERIAL</string>
+    <string-array name="calendar_themes">
+        <item>MATERIAL</item>
+        <item>BRIGHT</item>
+        <item>PASTEL</item>
+        <item>GRADIENT</item>
+    </string-array>
+
 </resources>

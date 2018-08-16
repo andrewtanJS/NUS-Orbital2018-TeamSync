@@ -156,7 +156,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         String from_user_id = c.getMessageUserId();
 
-        if (!from_user_id.equals(user_id)){
+        if (from_user_id.equals(user_id)){
             return USER;
         }
         else {
