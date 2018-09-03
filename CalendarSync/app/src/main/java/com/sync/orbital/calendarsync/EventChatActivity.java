@@ -72,7 +72,6 @@ public class EventChatActivity extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.event_chat_toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(mEventName);
 
 
@@ -113,7 +112,6 @@ public class EventChatActivity extends AppCompatActivity {
         mMessageText = (EditText) findViewById(R.id.event_message_text);
         mSendButton = (ImageButton) findViewById(R.id.event_message_send_btn);
         mMessageList = (RecyclerView) findViewById(R.id.event_message_list);
-        mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.event_chat_swipe);
         mLinearLayout = new LinearLayoutManager(this);
 
         mAdapter = new MessageAdapter(messagesList);
@@ -175,7 +173,6 @@ public class EventChatActivity extends AppCompatActivity {
 
                 mMessageList.scrollToPosition(messagesList.size()-1);
 
-                mRefreshLayout.setRefreshing(false);
 
             }
 

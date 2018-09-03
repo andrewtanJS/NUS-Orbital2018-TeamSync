@@ -52,8 +52,6 @@ public class EventInfoActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.event_info_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Event Info");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         mAuth = FirebaseAuth.getInstance();
 
