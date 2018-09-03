@@ -22,10 +22,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/settings_status_button"
-        android:layout_marginStart="47dp"
+        android:layout_marginStart="25dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="Change Picture"
-        android:textColor="@color/colorWhite"/>
+        android:textColor="@color/colorWhite" />
 
     <Button
         android:id="@+id/settings_status_button"
@@ -33,11 +33,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="194dp"
-        android:layout_marginEnd="49dp"
+        android:layout_marginBottom="195dp"
+        android:layout_marginEnd="25dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="Change status"
-        android:textColor="@color/colorWhite"/>
+        android:textColor="@color/colorWhite" />
 
     <Button
         android:id="@+id/settings_logout_button"
