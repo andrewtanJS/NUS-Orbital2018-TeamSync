@@ -1,19 +1,26 @@
 package com.sync.orbital.calendarsync;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.EventLog;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -23,7 +30,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.mikhaellopez.circularimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 public class EventInfoActivity extends AppCompatActivity {
 
@@ -34,12 +44,17 @@ public class EventInfoActivity extends AppCompatActivity {
     private Button mEditBtn;
     private Button mDeleteBtn;
 
+    private RecyclerView mMemberList;
+
     private Toolbar mToolbar;
 
     private DatabaseReference mUsersDatabase;
     private DatabaseReference mEventsDatabase;
+    private DatabaseReference mAllUsersDatabase;
 
     private FirebaseAuth mAuth;
+
+    private String event_id;
 
     private ProgressDialog mProgressDialog;
 
@@ -55,10 +70,11 @@ public class EventInfoActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        final String event_id = getIntent().getStringExtra("event_id");
+        event_id = getIntent().getStringExtra("event_id");
         final String user_id = mAuth.getCurrentUser().getUid();
 
         mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
+        mAllUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
         mEventsDatabase = FirebaseDatabase.getInstance().getReference().child("Events").child(event_id);
 
         mEventName = (TextView) findViewById(R.id.event_info_name);
@@ -67,6 +83,10 @@ public class EventInfoActivity extends AppCompatActivity {
         mStartTime = (TextView) findViewById(R.id.event_info_start_time);
         mEndDate = (TextView) findViewById(R.id.event_info_end_date);
         mEndTime = (TextView) findViewById(R.id.event_info_end_time);
+
+        mMemberList = (RecyclerView) findViewById(R.id.event_info_member_list);
+        mMemberList.setHasFixedSize(true);
+        mMemberList.setLayoutManager(new LinearLayoutManager(this));
 
 
         mEventsDatabase.addValueEventListener(new ValueEventListener() {
@@ -152,5 +172,102 @@ public class EventInfoActivity extends AppCompatActivity {
         Intent intent = new Intent(EventInfoActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    // Member list
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        startListening();
+    }
+
+    public void startListening() {
+        Query query = FirebaseDatabase.getInstance()
+                .getReference()
+                .child("Events")
+                .child(event_id)
+                .child("members")
+                .limitToLast(50);
+
+        FirebaseRecyclerOptions<ContactsAllStruct> options =
+                new FirebaseRecyclerOptions.Builder<ContactsAllStruct>()
+                        .setQuery(query, ContactsAllStruct.class)
+                        .build();
+
+        FirebaseRecyclerAdapter firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<ContactsAllStruct, FriendsViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull final FriendsViewHolder holder, int position, @NonNull ContactsAllStruct model) {
+//                holder.setName(model.name);
+//                holder.setThumbImage(model.thumb_image, getApplicationContext());
+
+                final String userid = getRef(position).getKey();
+
+                mAllUsersDatabase.child(userid).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String userName = dataSnapshot.child("name").getValue().toString();
+                        String userThumb = dataSnapshot.child("thumb_image").getValue().toString();
+
+                        holder.setName(userName);
+                        holder.setThumbImage(userThumb, getApplicationContext());
+
+                        holder.mView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent_prof = new Intent(EventInfoActivity.this, UsersProfileActivity.class);
+                                intent_prof.putExtra("user_id", userid);
+                                startActivity(intent_prof);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
+            }
+
+            @NonNull
+            @Override
+            public FriendsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.list_contact_small, parent, false);
+
+                return new FriendsViewHolder(view);
+            }
+
+        };
+
+        mMemberList.setAdapter(firebaseRecyclerAdapter);
+        firebaseRecyclerAdapter.startListening();
+    }
+
+    public static class FriendsViewHolder extends RecyclerView.ViewHolder {
+
+        View mView;
+
+        public FriendsViewHolder(View itemView) {
+            super(itemView);
+
+            mView = itemView;
+
+        }
+
+        public void setName(String name){
+            TextView userNameView = mView.findViewById(R.id.name_contacts_all);
+            userNameView.setText(name);
+
+        }
+
+        public void setThumbImage(String thumbImage, Context context){
+            CircularImageView userImageView = mView.findViewById(R.id.profile_pic_contacts);
+            Picasso.get().load(thumbImage).placeholder(R.drawable.default_user).into(userImageView);
+        }
+
+
     }
 }

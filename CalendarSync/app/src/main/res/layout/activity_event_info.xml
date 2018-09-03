@@ -10,17 +10,18 @@
         android:id="@+id/event_info_toolbar"
         layout="@layout/toolbar" />
 
+
     <TextView
         android:id="@+id/event_info_name"
-        android:layout_width="wrap_content"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="22dp"
         android:layout_marginTop="78dp"
         android:text="Event Name"
-        android:textSize="24sp"
-        android:textColor="@color/colorBlack"/>
+        android:textColor="@color/colorBlack"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/event_info_from"
@@ -30,7 +31,8 @@
         android:layout_alignStart="@+id/event_info_name"
         android:layout_marginTop="121dp"
         android:text="From"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@color/colorBlack"/>
 
     <TextView
         android:id="@+id/event_info_to"
@@ -40,7 +42,8 @@
         android:layout_alignTop="@+id/event_info_from"
         android:layout_marginEnd="136dp"
         android:text="To"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@color/colorBlack"/>
 
     <TextView
         android:id="@+id/event_info_start_date"
@@ -91,12 +94,13 @@
         android:layout_alignStart="@+id/event_info_name"
         android:layout_marginTop="227dp"
         android:text="Description"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@color/colorBlack"/>
 
     <TextView
         android:id="@+id/event_info_description"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="35dp"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="22dp"
         android:layout_marginStart="22dp"
@@ -110,15 +114,16 @@
         android:layout_alignStart="@+id/event_info_name"
         android:layout_below="@+id/event_info_description"
         android:text="Location"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:textColor="@color/colorBlack"/>
 
     <TextView
         android:id="@+id/event_info_location"
         android:layout_width="341dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/event_info_attending"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="35dp"
+        android:layout_marginBottom="222dp"
         android:textSize="16sp" />
 
     <TextView
@@ -127,8 +132,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/event_info_name"
-        android:layout_marginBottom="166dp"
+        android:layout_marginBottom="188dp"
         android:text="Confirmed "
+        android:textColor="@color/colorBlack"
         android:textSize="16sp" />
 
 
@@ -151,6 +157,15 @@
         android:text="Leave event"
         android:textColor="@color/colorWhite"
         android:backgroundTint="@color/colorAccent"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/event_info_member_list"
+        android:layout_width="340dp"
+        android:layout_height="92dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="87dp"
+        android:layout_marginEnd="20dp"></android.support.v7.widget.RecyclerView>
 
 
 </RelativeLayout>

@@ -37,7 +37,7 @@ import java.util.Locale;
 
 public class CreateGroupActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private TextView mEventNameField, startDate, startTime, endDate, endTime;
+    private TextView mEventNameField, startDate, startTime, endDate, endTime, mDescription, mLocation;
     private int startYear, startMonth, startDay, startHour, startMinute,
             endYear, endMonth, endDay, endHour, endMinute;
     private boolean sD, sT, eD, eT;
@@ -53,8 +53,6 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Create Activity");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //Get group_id
         group_id = getIntent().getStringExtra("group_id");
@@ -73,6 +71,9 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
         btnStartTime.setOnClickListener(this);
         btnEndDate.setOnClickListener(this);
         btnEndTime.setOnClickListener(this);
+
+        mDescription = findViewById(R.id.activity_description);
+        mLocation = findViewById(R.id.activity_location);
 
         mEventNameField = findViewById(R.id.activity_name);
         buttonCreate = findViewById(R.id.action_create_event);
@@ -216,6 +217,8 @@ public class CreateGroupActivity extends AppCompatActivity implements View.OnCli
 
     private void addEventGroup(){
         final String eventName = mEventNameField.getText().toString().trim();
+        final String eventDescription = mDescription.getText().toString().trim();
+        final String eventLocation = mLocation.getText().toString().trim();
 
         String startDateStr = String.format(Locale.US, "%02d/%02d/%04d",
                 startDay,

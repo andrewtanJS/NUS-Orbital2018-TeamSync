@@ -40,8 +40,8 @@ public class ContactFragment extends Fragment {
         //Tabs
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.AddFragment(new ContactAllFragment(), "All");
-        adapter.AddFragment(new ContactGroupFragment(), "Group");
-        adapter.AddFragment(new ContactRequestFragment(), "Request");
+        adapter.AddFragment(new ContactGroupFragment(), "Groups");
+        adapter.AddFragment(new ContactRequestFragment(), "Requests");
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tab_layout_cont);

@@ -15,8 +15,8 @@
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/profile_pic_contacts"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/default_user"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="12dp"
@@ -30,19 +30,19 @@
                 android:id="@+id/name_contacts_all"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
                 android:text=""
                 android:textColor="@color/colorBlack"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/name_contacts_all"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="9dp"
                 android:background="@color/colorLightGrey" />
 
         </RelativeLayout>

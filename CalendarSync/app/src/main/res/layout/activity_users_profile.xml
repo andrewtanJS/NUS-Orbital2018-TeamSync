@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".UsersProfileActivity">
 
+    
     <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/users_profile_pic"
         android:layout_width="130dp"
@@ -15,6 +16,7 @@
         android:layout_marginTop="52dp"
         android:src="@drawable/default_user"
  />
+
 
     <TextView
         android:id="@+id/users_name"
