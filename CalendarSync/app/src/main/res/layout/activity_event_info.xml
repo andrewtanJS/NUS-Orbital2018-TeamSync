@@ -15,10 +15,9 @@
         android:id="@+id/event_info_name"
         android:layout_width="260dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="78dp"
+        android:layout_alignStart="@+id/event_info_description"
+        android:layout_marginTop="70dp"
         android:text="Event Name"
         android:textColor="@color/colorBlack"
         android:textSize="24sp" />
@@ -27,12 +26,12 @@
         android:id="@+id/event_info_from"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/event_info_start_time"
         android:layout_alignStart="@+id/event_info_name"
-        android:layout_marginTop="121dp"
+        android:layout_marginBottom="-153dp"
         android:text="From"
-        android:textSize="16sp"
-        android:textColor="@color/colorBlack"/>
+        android:textColor="@color/colorBlack"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/event_info_to"
@@ -142,8 +141,8 @@
         android:id="@+id/event_info_edit_btn"
         android:layout_width="70dp"
         android:layout_height="38dp"
-        android:layout_alignEnd="@+id/event_info_description"
         android:layout_alignTop="@+id/event_info_name"
+        android:layout_toEndOf="@+id/event_info_end_time"
         android:text="Edit" />
 
     <Button
