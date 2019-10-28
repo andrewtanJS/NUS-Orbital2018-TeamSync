@@ -2,6 +2,8 @@
 
 **CalendarSync** is an Android application that serves as the main platform for users to coordinate their calendars and schedule events accordingly. It aims to make it easy and intuitive for users to manage their own calendars and coordinate with their many social and professional groups to organize and plan events.
 
+![poster](poster.png)
+
 Features
 ------
 * User Authentication
@@ -9,6 +11,8 @@ Features
 * Customize User Profile
 * Create Events within Group
 * Add Friends
+* Group Chat
+* Theme Customizations
 
 Installation Guide
 ------
@@ -26,4 +30,4 @@ Contact @gmail.com for app inquiry or bug reports.
 
 
 
-*Repository for NUS Orbital 2018 - Team Sync*
+*Repository for NUS Orbital 2018 (Gemini) - Team Sync*
